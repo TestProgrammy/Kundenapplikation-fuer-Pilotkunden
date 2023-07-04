@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": [
+        "app\\src\\main\\java\\de.ewe.tk.customer"
+    ],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar"
+    ]
+}
