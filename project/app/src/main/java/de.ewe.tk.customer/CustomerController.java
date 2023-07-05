@@ -73,19 +73,29 @@ public class CustomerController {
 
         // CreateTable.execute(CustomerList);
 
+        System.out.printf(
+                "%-3s | %-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10s | %-10s | %-25s | %-17s | %-17s | %-17s | %-32s | %-12s%n",
+                "Nr.", "Anrede", "Titel", "Vorname", "Nachname", "Geburtsdatum", "Straße",
+                "Hausnr.", "PLZ", "Ort",
+                "Telefon", "Mobil", "Fax", "E-Mail", "Newsletter");
+
+        // Trennlinie ausgeben
         System.out.println(
-                "customer_number\t| salutation\t| title\t| name\t| last_name\t| birth_date\t| street\t| street_number\t| postcode\t| town\t\t\t| phone_number\t\t| mobile_number\t\t| fax\t\t| e_mail\t\t| newsletter");
-        for (int i = 0; i < CustomerList.size(); i++) {
-            System.out.println(CustomerList.get(i).getCustomernumber() + "\t\t| " + CustomerList.get(i).getSalulation()
-                    + "\t\t| " + CustomerList.get(i).getTitel() + "\t| " + CustomerList.get(i).getName() + "\t| "
-                    + CustomerList.get(i).getLastName() + "\t| " + CustomerList.get(i).getBirthdate() + "\t| "
-                    + CustomerList.get(i).getStreet() + "\t| " + CustomerList.get(i).getStreetnumber() + "\t\t| "
-                    + CustomerList.get(i).getPostcode() + "\t\t| " + CustomerList.get(i).getTown() + "\t| "
-                    + CustomerList.get(i).getPhonenumber() + "\t| " + CustomerList.get(i).getMobilephonenumeber()
-                    + "\t| " + CustomerList.get(i).getFax() + "\t| " + CustomerList.get(i).getEmail() + "\t| "
-                    + CustomerList.get(i).getNewsletter());
+                "===================================================================================================================================================================================================================================================================================================");
 
+        // Jeden Kunden in der Liste ausgeben
+        for (Customer customer : CustomerList) {
+            System.out.printf(
+                    "%-3d | %-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10d | %-10d | %-25s | %-17s | %-17s | %-17s | %-32s | %-12s%n",
+                    customer.getCustomernumber(), customer.getSalulation(), customer.getTitel(),
+                    customer.getName(),
+                    customer.getLastName(),
+                    customer.getBirthdate(), customer.getStreet(), customer.getStreetnumber(),
+                    customer.getPostcode(),
+                    customer.getTown(),
+                    customer.getPhonenumber(), customer.getMobilephonenumeber(),
+                    customer.getFax(), customer.getEmail(),
+                    customer.getNewsletter() == 1 ? "Ja" : "Nein");
         }
-
     }
 }
