@@ -6,33 +6,38 @@ public class CustomerController {
     public static void main(String[] args) throws Exception {
 
         String[] choices = { "Neukunden einpflegen", "Kundendaten verändern", "Kunden löschen", "Kunden suchen",
-                "Alle Kunden anzeigen" };
+                "Alle Kunden anzeigen", "Beenden" };
 
-        /**
-         * System.out.println("Datenbank einbinden");
-         * System.out.println("\tDatenbank wurde noch nicht eingebunden");
-         * System.out.println("---------------");
-         * System.out.println("Eingabe des Kunden");
-         * System.out.println("---------------");
-         **/
-        System.out.println("Was wollen Sie tun?\n");
+        while (true) {
+            System.out.println("\nWas wollen Sie tun?\n");
 
-        printList(choices);
-        int choice = getinputUser(choices);
+            // Get User choice
+            printList(choices);
+            int choice = getinputUser(choices);
 
-        if (choice == 5) {
-            showAllUsers();
+            switch (choice) {
+                case 1:
+                    addUser();
+                    break;
+                case 2:
+                    updateUser();
+                    break;
+                case 3:
+                    deleteUser();
+                    break;
+                case 4:
+                    searchUser();
+                    break;
+                case 5:
+                    showAllUsers();
+                    break;
+                case 6:
+                    System.exit(0);
+                    break;
+                default:
+            }
+            waitForEnter();
         }
-
-        /*
-         * System.out.println("---------------");
-         * System.out.println("Daten annehmen / verarbeiten");
-         * System.out.println("");
-         * System.out.println("Daten in DB speichern");
-         * System.out.println("");
-         * System.out.println("Erfolgsmeldung an den User");
-         * System.out.println("");
-         **/
     }
 
     /* functions */
@@ -40,7 +45,8 @@ public class CustomerController {
         for (int i = 1; i <= list.length; i++) {
             System.out.println(i + ". " + list[i - 1]);
         }
-        IO.print("");
+        System.out.println("");
+        return;
     }
 
     static int getinputUser(String[] list) {
@@ -50,29 +56,44 @@ public class CustomerController {
     }
 
     static void addUser() {
+        String query = "";
+        System.out.println("Query: \n" + query + "\n");
+        return;
     }
 
     static void updateUser() {
+        String query = "";
+        System.out.println("Query: \n" + query + "\n");
+        return;
     }
 
     static void deleteUser() {
+        String query = "";
+        System.out.println("Query: \n" + query + "\n");
+        return;
     }
 
     static void searchUser() {
+        String what = IO.readString("Suchbegriff: ");
+        String query = "SELECT * FROM pilot_customers.customers WHERE name = '" + what + "' OR last_name = '" + what
+                + "';";
+        System.out.println("Suchergebnisse: \n");
+        showUsers(query);
+        return;
     }
 
     static void showAllUsers() {
         String query = "SELECT * FROM pilot_customers.customers;";
-        /**
-         * ResultSet rs = CustomerService.main(query);
-         **/
         System.out.println("Alle Kunden:\n");
+        showUsers(query);
+        return;
+    }
 
-        /** ResultSetDemo.main(null, query); **/
+    static void showUsers(String query) {
+        // Holt die Daten
         List<Customer> CustomerList = GetUserInput.main(null, query);
 
-        // CreateTable.execute(CustomerList);
-
+        // Kopfzeile
         System.out.printf(
                 "%-3s | %-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10s | %-10s | %-25s | %-17s | %-17s | %-17s | %-32s | %-12s%n",
                 "Nr.", "Anrede", "Titel", "Vorname", "Nachname", "Geburtsdatum", "Straße",
@@ -97,5 +118,11 @@ public class CustomerController {
                     customer.getFax(), customer.getEmail(),
                     customer.getNewsletter() == 1 ? "Ja" : "Nein");
         }
+        return;
+    }
+
+    static void waitForEnter() {
+        IO.readString("Drücke Enter ...");
+        return;
     }
 }
