@@ -1,40 +1,48 @@
+//package com.journaldev.examples;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerService {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/pilot_customers";
-    private static final String USERNAME = "Testuser";
-    private static final String PASSWORD = "Test123456*";
 
-    public static void main(String[] args) {
-        Connection connection = null;
+	public static List<Customer> main(String[] args, String query) {
+		// String query = "select customer_number, salution, title, name, last_name,
+		// birth_date, street, street_number, postcode, town, phone_number,
+		// mobile_number, fax, e_mail, newsletter";
+		Connection conn = null;
+		Statement stmt = null;
+		List<Customer> customerList = new ArrayList<Customer>();
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pilot_customers", "Testuser",
+					"Test123456*");
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				Customer customer = new Customer(rs.getInt(1), rs.getString(2),
+						rs.getString(3), rs.getString(4),
+						rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8),
+						rs.getInt(9), rs.getString(10),
+						rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14),
+						rs.getInt(15));
 
-        try {
-            // Register the JDBC driver (optional for newer versions of JDBC)
-            Class.forName("com.mysql.jdbc.Driver");
+				customerList.add(customer);
 
-            // Open a connection
-            connection = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-
-            // Check if the connection is successful
-            if (connection != null) {
-                System.out.println("Database connection established!");
-                // Perform database operations here
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // Close the connection
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
+			}
+			rs.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conn.close();
+			} catch (Exception e) {
+			}
+		}
+		return customerList;
+	}
 }
