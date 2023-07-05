@@ -75,9 +75,10 @@ public class CustomerController {
 
     static void searchUser() {
         String what = IO.readString("Suchbegriff: ");
-        String query = "SELECT * FROM pilot_customers.customers WHERE name = '" + what + "' OR last_name = '" + what
-                + "';";
+        String query = "SELECT * FROM pilot_customers.customers WHERE name LIKE '%" + what + "%' OR last_name LIKE '%"
+                + what + "%';";
         System.out.println("Suchergebnisse: \n");
+        System.err.println(query);
         showUsers(query);
         return;
     }
