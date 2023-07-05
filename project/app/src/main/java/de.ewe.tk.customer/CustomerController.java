@@ -1,8 +1,8 @@
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Scalar.String;
+import java.util.List;
 
 import util.IO;
 
-public class CustomerService2 {
+public class CustomerController {
     public static void main(String[] args) throws Exception {
 
         String[] choices = { "Neukunden einpflegen", "Kundendaten verändern", "Kunden löschen", "Kunden suchen",
@@ -69,39 +69,23 @@ public class CustomerService2 {
         System.out.println("Alle Kunden:\n");
 
         /** ResultSetDemo.main(null, query); **/
-        List<Customer> CustomerList = ResultSet.main(null, query);
+        List<Customer> CustomerList = GetUserInput.main(null, query);
 
-        CreateTable(CustomerList);
-        /**
-         * System.out.println(
-         * "customer_number\t| salutation\t| title\t| name\t| last_name\t| birth_date\t|
-         * street\t| street_number\t| postcode\t| town\t| phone_number\t|
-         * mobile_number\t fax text\t| e_mail\t| newsletter");
-         * 
-         * try {
-         * 
-         * int customer_number = rs.getInt(1);
-         * String salutation = rs.getString(2);
-         * String title = rs.getString(3);
-         * String name = rs.getString(4);
-         * String last_name = rs.getString(4);
-         * String birth_date = rs.getString(5);
-         * String street = rs.getString(6);
-         * int street_number = rs.getInt(7);
-         * int postcode = rs.getInt(8);
-         * String town = rs.getString(9);
-         * String phone_number = rs.getString(10);
-         * String mobile_number = rs.getString(11);
-         * String fax = rs.getString(12);
-         * String e_mail = rs.getString(13);
-         * int newsletter = rs.getInt(14);
-         * 
-         * IO.print("");
-         * }
-         * rs.close();
-         * } catch (Exception e) {
-         * e.printStackTrace();
-         * }
-         **/
+        // CreateTable.execute(CustomerList);
+
+        System.out.println(
+                "customer_number\t| salutation\t| title\t| name\t| last_name\t| birth_date\t| street\t| street_number\t| postcode\t| town\t\t\t| phone_number\t\t| mobile_number\t\t| fax\t\t| e_mail\t\t| newsletter");
+        for (int i = 0; i < CustomerList.size(); i++) {
+            System.out.println(CustomerList.get(i).getCustomernumber() + "\t\t| " + CustomerList.get(i).getSalulation()
+                    + "\t\t| " + CustomerList.get(i).getTitel() + "\t| " + CustomerList.get(i).getName() + "\t| "
+                    + CustomerList.get(i).getLastName() + "\t| " + CustomerList.get(i).getBirthdate() + "\t| "
+                    + CustomerList.get(i).getStreet() + "\t| " + CustomerList.get(i).getStreetnumber() + "\t\t| "
+                    + CustomerList.get(i).getPostcode() + "\t\t| " + CustomerList.get(i).getTown() + "\t| "
+                    + CustomerList.get(i).getPhonenumber() + "\t| " + CustomerList.get(i).getMobilephonenumeber()
+                    + "\t| " + CustomerList.get(i).getFax() + "\t| " + CustomerList.get(i).getEmail() + "\t| "
+                    + CustomerList.get(i).getNewsletter());
+
+        }
+
     }
 }
