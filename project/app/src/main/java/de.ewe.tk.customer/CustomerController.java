@@ -14,19 +14,36 @@ public class CustomerController {
             // Get User choice
             printList(choices);
             int choice = getinputUser(choices);
-
+            String isNotBreak = "y";
+            
             switch (choice) {
                 case 1:
-                    addUser();
+                    while (true) {
+                        addUser();
+                        isNotBreak = IO.readString("Weiter? j/n");
+                        if (isNotBreak != "j") {break;}
+                    }
                     break;
                 case 2:
+                    while (true) {
                     updateUser();
+                    isNotBreak = IO.readString("Weiter? j/n");
+                        if (isNotBreak != "j") {break;}
+                    }
                     break;
                 case 3:
+                    while (true) {
                     deleteUser();
+                    isNotBreak = IO.readString("Weiter? j/n");
+                        if (isNotBreak != "j") {break;}
+                    }
                     break;
                 case 4:
+                    while (true) {
                     searchUser();
+                    isNotBreak = IO.readString("Weiter? j/n");
+                        if (isNotBreak != "j") {break;}
+                    }
                     break;
                 case 5:
                     showAllUsers();
@@ -56,20 +73,61 @@ public class CustomerController {
     }
 
     static void addUser() {
-        String query = "";
+        //int customerNumber = IO.readString("Titel: ");
+        String salulation = IO.readString("Anrede: ");
+        String titel = IO.readString("Titel: ");
+        String name = IO.readString("Vorname: ");
+        String lastName = IO.readString("Nachname: ");
+        String birthdate = IO.readString("Geburtsdatum: ");
+        String street = IO.readString("Straße: ");
+        int streetNumber = IO.readString("Hausnr.: ");
+        int postcode = IO.readString("PLZ: ");
+        String town = IO.readString("Stadt: ");
+        String phoneNumber  = IO.readString("Telefonnr.: ");
+        String mobilephonenNumeber = IO.readString("Handynr.: ");
+        String fax customer = IO.readString("Fax: ");
+        String newsletter = IO.readString("Newsletter: Ja/Nein");
+        int newsletter = newsletter == "Ja" ? 1 : 0;
+        
+        String query = "INSERT INTO pilot_customers.customers ?", salulation, titel, name, lastName, birthdate, street, streetNumber, postcode, town, phoneNumber, mobilephonenNumeber, fax, newsletter, ";";
         System.out.println("Query: \n" + query + "\n");
+        System.out.printf(
+                "%-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10s | %-10s | %-25s | %-17s | %-17s | %-17s | %-32s | %-12s%n",
+                "Anrede", "Titel", "Vorname", "Nachname", "Geburtsdatum", "Straße",
+                "Hausnr.", "PLZ", "Ort",
+                "Telefon", "Mobil", "Fax", "E-Mail", "Newsletter");
+        System.out.printf(
+                    "%-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10d | %-10d | %-25s | %-17s | %-17s | %-17s | %-32s | %-12s%n", salulation, titel, name, lastName, birthdate, street, streetNumber, postcode, town, phoneNumber, mobilephonenNumeber, fax, newsletter);
+            isOkay = IO.readString("Richtig? j/n");
+            if (isOkay == "j") {
+                showUsers(query);
+                // meldung?
+            }
         return;
     }
 
     static void updateUser() {
-        String query = "";
+        // fragen was upgedated werden soll?
+        String query = "UPDATE ....;";
         System.out.println("Query: \n" + query + "\n");
+        isOkay = IO.readString("Richtig? j/n");
+        if (isOkay == "j") {
+                showUsers(query);
+                // meldung?
+            }
         return;
     }
 
     static void deleteUser() {
-        String query = "";
+        int nr = IO.readInt("Kundennummer des zulöschenden Kunden: ");
+        String query = "DELETE * FROM pilot_customers.customers WHERE customer_number = " +nr+";";
         System.out.println("Query: \n" + query + "\n");
+        String showQuery = "SELECT * FROM pilot_cutomers.customers WHERE customer_number = " +nr+";";
+        isOkay = IO.readString("Richtig? j/n");
+            if (isOkay == "j") {
+                showUsers(query);
+                // meldung?
+            }
         return;
     }
 
@@ -78,15 +136,15 @@ public class CustomerController {
         String query = "SELECT * FROM pilot_customers.customers WHERE name LIKE '%" + what + "%' OR last_name LIKE '%"
                 + what + "%';";
         System.out.println("Suchergebnisse: \n");
-        System.err.println(query);
-        showUsers(query);
+        System.out.println(query);
+        //showUsers(query);
         return;
     }
 
     static void showAllUsers() {
         String query = "SELECT * FROM pilot_customers.customers;";
         System.out.println("Alle Kunden:\n");
-        showUsers(query);
+        //showUsers(query);
         return;
     }
 
