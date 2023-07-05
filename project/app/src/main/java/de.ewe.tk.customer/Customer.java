@@ -14,7 +14,7 @@ public class Customer {
 
   
   // Konstruktor, legt ein Kundenobjekt an und befüllt sie
-  public Customer(String name, String last_name) {
+  public Customer(String name, String last_name, String birth_date, String street, String street_number, String postcode, String town, String phone_number, String mobile_number, String fax, String e_mail, String newsletter) {
         this.name = name;
         this.last_name = last_name;
         this.birth_date = birth_date;
