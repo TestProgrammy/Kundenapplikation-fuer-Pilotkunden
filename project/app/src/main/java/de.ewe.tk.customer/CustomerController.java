@@ -14,14 +14,14 @@ public class CustomerController {
             // Get User choice
             printList(choices);
             int choice = getinputUser(choices);
-            String isNotBreak = "y";
+            String isNotBreak = "j";
 
             switch (choice) {
                 case 1:
                     while (true) {
                         addUser();
                         isNotBreak = IO.readString("Weiter? j/n ");
-                        if (isNotBreak != "j") {
+                        if (!isNotBreak.equals("j")) {
                             break;
                         }
                     }
@@ -30,7 +30,7 @@ public class CustomerController {
                     while (true) {
                         updateUser();
                         isNotBreak = IO.readString("Weiter? j/n ");
-                        if (isNotBreak != "j") {
+                        if (!isNotBreak.equals("j")) {
                             break;
                         }
                     }
@@ -39,7 +39,7 @@ public class CustomerController {
                     while (true) {
                         deleteUser();
                         isNotBreak = IO.readString("Weiter? j/n ");
-                        if (isNotBreak != "j") {
+                        if (!isNotBreak.equals("j")) {
                             break;
                         }
                     }
@@ -48,7 +48,7 @@ public class CustomerController {
                     while (true) {
                         searchUser();
                         isNotBreak = IO.readString("Weiter? j/n ");
-                        if (isNotBreak != "j") {
+                        if (!isNotBreak.equals("j")) {
                             break;
                         }
                     }
@@ -76,58 +76,46 @@ public class CustomerController {
 
     static int getinputUser(String[] list) {
         int choice = IO.readInt("Nummer: ");
-        System.out.println("\nGewählt: " + list[choice - 1] + "\n");
+        // System.out.println("\nGewählt: " + list[choice - 1] + "\n");
         return choice;
     }
 
     static void addUser() {
-        // int customerNumber = IO.readString("Titel: ");
-        String salulation = IO.readString("Anrede: ");
-        String titel = IO.readString("Titel: ");
-        String name = IO.readString("Vorname: ");
-        String lastName = IO.readString("Nachname: ");
-        String birthdate = IO.readString("Geburtsdatum: ");
-        String street = IO.readString("Straße: ");
-        int streetNumber = IO.readInt("Hausnr.: ");
-        int postcode = IO.readInt("PLZ: ");
-        String town = IO.readString("Stadt: ");
-        String phoneNumber = IO.readString("Telefonnr.: ");
-        String mobilephonenNumeber = IO.readString("Handynr.: ");
-        String fax = IO.readString("Fax: ");
-        String email = IO.readString("Email: ");
-        String tempnewsletter = IO.readString("Newsletter: Ja/Nein ");
-        int newsletter = tempnewsletter == "Ja" ? 1 : 0;
+        System.out.println("Neuen Kunden eingeben:\n");
 
-        System.out.println("");
+        Customer customer = new Customer(IO.readInt("Kundennummer: "), IO.readString("Anrede: "),
+                IO.readString("Titel: "), IO.readString("Vorname: "), IO.readString("Nachname: "),
+                IO.readString("Geburtsdatum: "), IO.readString("Straße: "), IO.readInt("Hausnr.: "),
+                IO.readInt("PLZ: "), IO.readString("Stadt: "), IO.readString("Telefonnr.: "),
+                IO.readString("Handynr.: "), IO.readString("Fax: "), IO.readString("Email: "),
+                (IO.readString("Newsletter: j/n ").equals("j") == true ? 1 : 0));
+
         System.out.printf(
-                "%-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10s | %-10s | %-25s | %-17s | %-17s | %-17s | %-32s | %-12s%n",
-                "Anrede", "Titel", "Vorname", "Nachname", "Geburtsdatum", "Straße",
-                "Hausnr.", "PLZ", "Ort",
+                "%-3s | %-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10s | %-10s | %-25s| %-17s | %-17s | %-17s | %-32s | %-12s%n",
+                "Nr", "Anrede", "Titel", "Vorname", "Nachname", "Geburtsdatum", "Straße", "Hausnr.", "PLZ", "Ort",
                 "Telefon", "Mobil", "Fax", "E-Mail", "Newsletter");
         System.out.printf(
-                "%-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10d | %-10d | %-25s | %-17s | %-17s | %-17s | %-32s | %-12s%n",
-                salulation, titel, name, lastName, birthdate, street, streetNumber, postcode, town, phoneNumber,
-                mobilephonenNumeber, fax, email, tempnewsletter);
-        String isOkay = IO.readString("Richtig? j/n ");
-        System.out.println("Test1" + isOkay);
-        if (isOkay == "j") {
-            System.out.println("in if");
-            String query = "INSERT into pilot_customers.customers (customer_number, salution, title, name, last_name, birth_date, street, street_number, postcode, town, phone_number, mobile_number, fax, e_mail, newsletter) values ('"
-                    + salulation + "','" + titel + "','" + name + "','" + lastName + "','" + birthdate + "','" + street
-                    + "','" + streetNumber + "','" + postcode + "','" + town + "','" + phoneNumber + "','"
-                    + mobilephonenNumeber + "','" + fax + "','" + newsletter + "';";
-            System.out.println("Query: \n" + query + "\n");
-            // showUsers(query);
-            System.out.println("Insert ausführen, nicht aktiviert");
+                "%-3d | %-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10d | %-10d | %-25s | %-17s | %-17s | %-17s | %-32s | %-12s%n",
+                customer.getCustomernumber(), customer.getSalulation(), customer.getTitel(), customer.getName(),
+                customer.getLastName(), customer.getBirthdate(), customer.getStreet(), customer.getStreetnumber(),
+                customer.getPostcode(), customer.getTown(), customer.getPhonenumber(), customer.getMobilephonenumeber(),
+                customer.getFax(), customer.getEmail(), (customer.getNewsletter() == 1 ? "Ja" : "Nein"));
 
-            // meldung?
+        String isOkay = IO.readString("Richtig? j/n ");
+        if (isOkay.equals("j")) {
+            System.out.println("insert ausführen");
+            // CustomerService.addCustomer(customer);
+            System.out.println("Meldung\n");
+        } else {
+            System.out.print("Abbruch\n");
         }
         return;
     }
 
     static void updateUser() {
+        System.out.println("Kunden updaten:\n");
         int nr = IO.readInt("Kundennummer des zuupdatenden Kunden: ");
-        // fragen was upgedated werden soll?
+        System.out.println("");
 
         String[][] valuesOfColumns = {
                 { "salulation", "String", "Anrede: " },
@@ -140,58 +128,72 @@ public class CustomerController {
                 { "postcode", "Int", "PLZ: " },
                 { "town", "String", "Stadt: " },
                 { "phoneNumber", "String", "Telefonnr.: " },
-                { "mobilephonenNumeber", "String", "Handynr.: " },
+                { "mobilephoneNumeber", "String", "Handynr.: " },
                 { "fax", "String", "Fax: " },
                 { "email", "String", "Email: " },
                 { "newsletter", "String", "Newsletter: Ja/Nein " }
         };
 
         String stringForUpdate = "UPDATE pilot_customers.customers SET";
-        for (int i = 0; i < valuesOfColumns.length; i++) {// (Object[] valuesOfColumn : valuesOfColumns) {
+        for (int i = 0; i < valuesOfColumns.length; i++) {
             String column = valuesOfColumns[i][0];
             String cast = valuesOfColumns[i][1];
             String request = valuesOfColumns[i][2];
-            if (cast == "Int") {
+
+            if (cast.equals("Int")) {
                 int value = IO.readInt(request);
-                if (value == 0) {
-                    stringForUpdate += " " + column + " = " + value + ",";
+                if (value != 0) {
+                    stringForUpdate = String.format("%s %s = %d,", stringForUpdate, column, value);
                 }
             } else {
                 String value = IO.readString(request);
-                if (value == "0") {
-                    if (column == "newsletter") {
-                        stringForUpdate += " " + column + " = " + (value == "Ja" ? 1 : 0) + ",";
+                if (!value.equals("0")) {
+                    if (column.equals("newsletter")) {
+                        stringForUpdate = String.format("%s %s = %d,", stringForUpdate, column,
+                                (value.equals("Ja") ? 1 : 0));
                     } else {
-                        stringForUpdate += " " + column + " = '" + value + "',";
+                        stringForUpdate = String.format("%s %s = '%s',", stringForUpdate, column, value);
                     }
                 }
             }
         }
-        stringForUpdate = stringForUpdate/** [0:(stringForUpdate.length()-1)] */
-                + "WHERE customer_number = " + nr + ";";
+        stringForUpdate = String.format("%s WHERE customer_number = %d;",
+                stringForUpdate.substring(0, stringForUpdate.length() - 1), nr);
 
-        String query = stringForUpdate;
-        System.out.println("Query: \n" + query + "\n");
+        System.out.println("Query: \n" + stringForUpdate + "\n");
         String isOkay = IO.readString("Richtig? j/n ");
-        if (isOkay == "j") {
+        System.out.println("");
+
+        if (isOkay.equals("j")) {
             System.out.println("Update ausführen, nicht aktiviert");
-            // showUsers(query);
-            // meldung?
+            // CustomerService.updateCustomer(customer);
+            System.out.println("Meldung\n");
+        } else {
+            System.out.print("Abbruch\n");
         }
         return;
     }
 
     static void deleteUser() {
+        System.out.println("Kunden löschen:\n");
+        System.out.println("");
+
         int nr = IO.readInt("Kundennummer des zulöschenden Kunden: ");
-        String query = "DELETE FROM pilot_customers.customers WHERE customer_number = " + nr + ";";
-        System.out.println("Query: \n" + query + "\n");
         String showQuery = "SELECT * FROM pilot_customers.customers WHERE customer_number = " + nr + ";";
         showUsers(showQuery);
+
         String isOkay = IO.readString("Richtig? j/n ");
-        if (isOkay == "j") {
-            System.out.println("Delete ausführen, nicht aktiviert");
-            // showUsers(query);
-            // meldung?
+        System.out.println("");
+
+        if (isOkay.equals("j")) {
+            boolean isSuccess = CustomerService.deleteCustomer(nr);
+            if (isSuccess) {
+                System.out.println("Erfolgreich!\n");
+            } else {
+                System.out.println("Fehlgeschlagen!\n");
+            }
+        } else {
+            System.out.print("Abbruch\n");
         }
         return;
     }
@@ -245,7 +247,7 @@ public class CustomerController {
     }
 
     static void waitForEnter() {
-        IO.readString("Drücke Enter ...");
+        IO.readString("\nDrücke Enter ...");
         return;
     }
 }
