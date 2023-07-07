@@ -104,7 +104,7 @@ public class CustomerController {
         String isOkay = IO.readString("Richtig? j/n ");
         if (isOkay.equals("j")) {
             System.out.println("insert ausführen");
-            // CustomerService.addCustomer(customer);
+            CustomerService.insertCustomer(customer);
             System.out.println("Meldung\n");
         } else {
             System.out.print("Abbruch\n");
