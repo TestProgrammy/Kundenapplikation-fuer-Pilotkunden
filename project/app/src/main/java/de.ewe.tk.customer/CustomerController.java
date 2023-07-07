@@ -20,7 +20,7 @@ public class CustomerController {
                 case 1:
                     while (true) {
                         addUser();
-                        isNotBreak = IO.readString("Weiter? j/n");
+                        isNotBreak = IO.readString("Weiter? j/n ");
                         if (isNotBreak != "j") {
                             break;
                         }
@@ -29,7 +29,7 @@ public class CustomerController {
                 case 2:
                     while (true) {
                         updateUser();
-                        isNotBreak = IO.readString("Weiter? j/n");
+                        isNotBreak = IO.readString("Weiter? j/n ");
                         if (isNotBreak != "j") {
                             break;
                         }
@@ -38,7 +38,7 @@ public class CustomerController {
                 case 3:
                     while (true) {
                         deleteUser();
-                        isNotBreak = IO.readString("Weiter? j/n");
+                        isNotBreak = IO.readString("Weiter? j/n ");
                         if (isNotBreak != "j") {
                             break;
                         }
@@ -47,7 +47,7 @@ public class CustomerController {
                 case 4:
                     while (true) {
                         searchUser();
-                        isNotBreak = IO.readString("Weiter? j/n");
+                        isNotBreak = IO.readString("Weiter? j/n ");
                         if (isNotBreak != "j") {
                             break;
                         }
@@ -94,13 +94,11 @@ public class CustomerController {
         String phoneNumber = IO.readString("Telefonnr.: ");
         String mobilephonenNumeber = IO.readString("Handynr.: ");
         String fax = IO.readString("Fax: ");
-        String tempnewsletter = IO.readString("Newsletter: Ja/Nein");
+        String email = IO.readString("Email: ");
+        String tempnewsletter = IO.readString("Newsletter: Ja/Nein ");
         int newsletter = tempnewsletter == "Ja" ? 1 : 0;
 
-        String query = "INSERT INTO pilot_customers.customers ?;";// , salulation, titel, name, lastName, birthdate,
-                                                                  // street, streetNumber, postcode, town, phoneNumber,
-                                                                  // mobilephonenNumeber, fax, newsletter, ";";
-        System.out.println("Query: \n" + query + "\n");
+        System.out.println("");
         System.out.printf(
                 "%-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10s | %-10s | %-25s | %-17s | %-17s | %-17s | %-32s | %-12s%n",
                 "Anrede", "Titel", "Vorname", "Nachname", "Geburtsdatum", "Straße",
@@ -109,22 +107,75 @@ public class CustomerController {
         System.out.printf(
                 "%-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10d | %-10d | %-25s | %-17s | %-17s | %-17s | %-32s | %-12s%n",
                 salulation, titel, name, lastName, birthdate, street, streetNumber, postcode, town, phoneNumber,
-                mobilephonenNumeber, fax, newsletter);
-        String isOkay = IO.readString("Richtig? j/n");
+                mobilephonenNumeber, fax, email, tempnewsletter);
+        String isOkay = IO.readString("Richtig? j/n ");
+        System.out.println("Test1" + isOkay);
         if (isOkay == "j") {
-            showUsers(query);
+            System.out.println("in if");
+            String query = "INSERT into pilot_customers.customers (customer_number, salution, title, name, last_name, birth_date, street, street_number, postcode, town, phone_number, mobile_number, fax, e_mail, newsletter) values ('"
+                    + salulation + "','" + titel + "','" + name + "','" + lastName + "','" + birthdate + "','" + street
+                    + "','" + streetNumber + "','" + postcode + "','" + town + "','" + phoneNumber + "','"
+                    + mobilephonenNumeber + "','" + fax + "','" + newsletter + "';";
+            System.out.println("Query: \n" + query + "\n");
+            // showUsers(query);
+            System.out.println("Insert ausführen, nicht aktiviert");
+
             // meldung?
         }
         return;
     }
 
     static void updateUser() {
+        int nr = IO.readInt("Kundennummer des zuupdatenden Kunden: ");
         // fragen was upgedated werden soll?
-        String query = "UPDATE ....;";
+
+        String[][] valuesOfColumns = {
+                { "salulation", "String", "Anrede: " },
+                { "titel", "String", "Titel: " },
+                { "name", "String", "Vorname: " },
+                { "lastName", "String", "Nachname: " },
+                { "birthdate", "String", "Geburtsdatum: " },
+                { "street", "String", "Straße: " },
+                { "streetNumber", "Int", "Hausnr.: " },
+                { "postcode", "Int", "PLZ: " },
+                { "town", "String", "Stadt: " },
+                { "phoneNumber", "String", "Telefonnr.: " },
+                { "mobilephonenNumeber", "String", "Handynr.: " },
+                { "fax", "String", "Fax: " },
+                { "email", "String", "Email: " },
+                { "newsletter", "String", "Newsletter: Ja/Nein " }
+        };
+
+        String stringForUpdate = "UPDATE pilot_customers.customers SET";
+        for (int i = 0; i < valuesOfColumns.length; i++) {// (Object[] valuesOfColumn : valuesOfColumns) {
+            String column = valuesOfColumns[i][0];
+            String cast = valuesOfColumns[i][1];
+            String request = valuesOfColumns[i][2];
+            if (cast == "Int") {
+                int value = IO.readInt(request);
+                if (value == 0) {
+                    stringForUpdate += " " + column + " = " + value + ",";
+                }
+            } else {
+                String value = IO.readString(request);
+                if (value == "0") {
+                    if (column == "newsletter") {
+                        stringForUpdate += " " + column + " = " + (value == "Ja" ? 1 : 0) + ",";
+                    } else {
+                        stringForUpdate += " " + column + " = '" + value + "',";
+                    }
+                }
+            }
+        }
+        stringForUpdate = stringForUpdate/** [0:(stringForUpdate.length()-1)] */
+                + "WHERE customer_number = " + nr + ";";
+
+        String query = stringForUpdate;
         System.out.println("Query: \n" + query + "\n");
-        String isOkay = IO.readString("Richtig? j/n");
+        String isOkay = IO.readString("Richtig? j/n ");
         if (isOkay == "j") {
-            showUsers(query);
+            System.out.println("Update ausführen, nicht aktiviert");
+            // showUsers(query);
             // meldung?
         }
         return;
@@ -132,22 +183,22 @@ public class CustomerController {
 
     static void deleteUser() {
         int nr = IO.readInt("Kundennummer des zulöschenden Kunden: ");
-        String query = "DELETE * FROM pilot_customers.customers WHERE customer_number = " + nr + ";";
+        String query = "DELETE FROM pilot_customers.customers WHERE customer_number = " + nr + ";";
         System.out.println("Query: \n" + query + "\n");
-        String showQuery = "SELECT * FROM pilot_cutomers.customers WHERE customer_number = " + nr + ";";
+        String showQuery = "SELECT * FROM pilot_customers.customers WHERE customer_number = " + nr + ";";
         showUsers(showQuery);
-        String isOkay = IO.readString("Richtig? j/n");
+        String isOkay = IO.readString("Richtig? j/n ");
         if (isOkay == "j") {
-            showUsers(query);
+            System.out.println("Delete ausführen, nicht aktiviert");
+            // showUsers(query);
             // meldung?
         }
         return;
     }
 
     static void searchUser() {
-        String what = IO.readString("Suchbegriff: ");
-        String query = "SELECT * FROM pilot_customers.customers WHERE name LIKE '%" + what + "%' OR last_name LIKE '%"
-                + what + "%';";
+        String nr = IO.readString("Suchbegriff: ");
+        String query = "SELECT * FROM pilot_customers.customers WHERE customer_number = " + nr + ";";
         System.out.println("Suchergebnisse: \n");
         System.out.println(query);
         showUsers(query);
