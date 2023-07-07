@@ -76,5 +76,47 @@ public class CustomerService {
         return true;
     }
     
+	    public static boolean insertCustomer(Customer customer) {
+        // String query = "select customer_number, salution, title, name, last_name,
+        // birth_date, street, street_number, postcode, town, phone_number,
+        // mobile_number, fax, e_mail, newsletter";
+        tring query = String.format("INSERT into pilot_customers.customers (%d, %s, %s, %s, %s, %s, %s, %d, %d, %s, %s, %s, %s, %s, %d);", customer.getCustomernumber(), customer.getSalulation(), customer.getTitel(),
+
+                    customer.getName(),
+
+                    customer.getLastName(),
+
+                    customer.getBirthdate(), customer.getStreet(), customer.getStreetnumber(),
+
+                    customer.getPostcode(),
+
+                    customer.getTown(),
+
+                    customer.getPhonenumber(), customer.getMobilephonenumeber(),
+
+                    customer.getFax(), customer.getEmail(),
+
+                    customer.getNewsletter();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pilot_customers", "Testuser",
+                    "Test123456*");
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(insertCustomer(customer));
+        
+            rs.close();
+        } catch (Exception e) {
+            return false;
+            e.printStackTrace();
+        } finally {
+            try {
+                stmt.close();
+                conn.close();
+            } catch (Exception e) {
+            }
+        }
+
+        return true;
+    }
 
 }
