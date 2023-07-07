@@ -44,5 +44,37 @@ public class CustomerService {
 			}
 		}
 		return customerList;
+
 	}
+	public static boolean deleteCustomer(Integer customerNumber ) {
+        // String query = "select customer_number, salution, title, name, last_name,
+        // birth_date, street, street_number, postcode, town, phone_number,
+        // mobile_number, fax, e_mail, newsletter";
+        String deleteQuery = String.format("DELETE * FROM customer WHERE nr = %d;", customerNumber);
+        Connection conn = null;
+        Statement stmt = null;
+        List<Customer> customerList = new ArrayList<Customer>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pilot_customers", "Testuser",
+                    "Test123456*");
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(deleteQuery);
+        
+            rs.close();
+        } catch (Exception e) {
+            return false;
+            e.printStackTrace();
+        } finally {
+            try {
+                stmt.close();
+                conn.close();
+            } catch (Exception e) {
+            }
+        }
+
+        return true;
+    }
+    
+
 }
