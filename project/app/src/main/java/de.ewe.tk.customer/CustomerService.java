@@ -75,9 +75,13 @@ public class CustomerService {
 
     public static boolean insertCustomer(Customer customer) {
         String query = String.format(
-                "INSERT into pilot_customers.customers (%d, '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, '%s', '%s', '%s', '%s', '%s', %d);",
-                customer.getCustomernumber(), customer.getSalulation(), customer.getTitel(), customer.getName(),
-                customer.getLastName(), customer.getBirthdate(), customer.getStreet(), customer.getStreetnumber(),
+                "INSERT into pilot_customers.customers (customer_number, salutation, title, name, last_name, birth_date, street, street_number, postcode, town, phone_number, mobile_number, fax, e_mail, newsletter) values(%d, '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, '%s', '%s', '%s', '%s', '%s', %d);",
+                customer.getCustomernumber(), customer.getSalulation(), customer.getTitel(),
+                customer.getName(), customer.getLastName(), customer.getBirthdate(), customer.getStreet(),
+                customer.getStreetnumber(),
+                customer.getPostcode(), customer.getTown(),
+                customer.getPhonenumber(), customer.getMobilephonenumeber(),
+                customer.getFax(), customer.getEmail(),
                 customer.getNewsletter());
 
         Connection conn = null;

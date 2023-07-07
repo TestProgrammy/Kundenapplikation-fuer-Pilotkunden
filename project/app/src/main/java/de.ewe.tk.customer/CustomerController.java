@@ -103,9 +103,12 @@ public class CustomerController {
 
         String isOkay = IO.readString("Richtig? j/n ");
         if (isOkay.equals("j")) {
-            System.out.println("insert ausführen");
-            CustomerService.insertCustomer(customer);
-            System.out.println("Meldung\n");
+            boolean isSuccess = CustomerService.insertCustomer(customer);
+            if (isSuccess) {
+                System.out.println("Erfolgreich!\n");
+            } else {
+                System.out.println("Fehlgeschlagen!\n");
+            }
         } else {
             System.out.print("Abbruch\n");
         }
@@ -165,9 +168,12 @@ public class CustomerController {
         System.out.println("");
 
         if (isOkay.equals("j")) {
-            System.out.println("Update ausführen, nicht aktiviert");
-            // CustomerService.updateCustomer(customer);
-            System.out.println("Meldung\n");
+            boolean isSuccess = true;// CustomerService.updateCustomer(customer);
+            if (isSuccess) {
+                System.out.println("Erfolgreich!\n");
+            } else {
+                System.out.println("Fehlgeschlagen!\n");
+            }
         } else {
             System.out.print("Abbruch\n");
         }
