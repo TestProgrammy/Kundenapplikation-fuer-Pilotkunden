@@ -1,45 +1,45 @@
 public class Customer {
-      private final Integer customer_number;
+      private final Integer customerNumber;
       private final String salution;
       private final String title;
       private final String name;
-      private final String last_name;
-      private final String birth_date;
+      private final String lastName;
+      private final String birthDate;
       private final String street;
-      private final Integer street_number;
+      private final Integer streetNumber;
       private final Integer postcode;
       private final String town;
-      private final String phone_number;
-      private final String mobile_number;
+      private final String phoneNumber;
+      private final String mobileNumber;
       private final String fax;
-      private final String e_mail;
+      private final String eMail;
       private final Integer newsletter;
 
       // Konstruktor, legt ein Kundenobjekt an und befüllt sie
-      public Customer(Integer customer_number, String salution, String title, String name, String last_name,
-                  String birth_date, String street, Integer street_number, Integer postcode, String town,
-                  String phone_number, String mobile_number, String fax, String e_mail, Integer newsletter) {
+      public Customer(Integer customerNumber, String salution, String title, String name, String lastName,
+                  String birthDate, String street, Integer streetNumber, Integer postcode, String town,
+                  String phoneNumber, String mobileNumber, String fax, String eMail, Integer newsletter) {
 
-            this.customer_number = customer_number;
+            this.customerNumber = customerNumber;
             this.salution = salution;
             this.title = title;
             this.name = name;
-            this.last_name = last_name;
-            this.birth_date = birth_date;
+            this.lastName = lastName;
+            this.birthDate = birthDate;
             this.street = street;
-            this.street_number = street_number;
+            this.streetNumber = streetNumber;
             this.postcode = postcode;
             this.town = town;
-            this.phone_number = phone_number;
-            this.mobile_number = mobile_number;
+            this.phoneNumber = phoneNumber;
+            this.mobileNumber = mobileNumber;
             this.fax = fax;
-            this.e_mail = e_mail;
+            this.eMail = eMail;
             this.newsletter = newsletter;
       }
 
       // Kundennummer abfragen
       public Integer getCustomernumber() {
-            return this.customer_number;
+            return this.customerNumber;
       }
 
       // Geschlächt abfragen
@@ -59,12 +59,12 @@ public class Customer {
 
       // Nachname des Kunden abfragen
       public String getLastName() {
-            return this.last_name;
+            return this.lastName;
       }
 
       // Geburtsdatum abfragen
       public String getBirthdate() {
-            return this.birth_date;
+            return this.birthDate;
       }
 
       // Straße abfragen
@@ -74,7 +74,7 @@ public class Customer {
 
       // Straßennummer abfragen
       public Integer getStreetnumber() {
-            return this.street_number;
+            return this.streetNumber;
       }
 
       // Postleitzahl abfragen
@@ -89,12 +89,12 @@ public class Customer {
 
       // Telefonnummer abfragen
       public String getPhonenumber() {
-            return this.phone_number;
+            return this.phoneNumber;
       }
 
       // Mobil Telefonnummer abfragen
       public String getMobilephonenumeber() {
-            return this.mobile_number;
+            return this.mobileNumber;
       }
 
       // Fax abfragen
@@ -104,7 +104,7 @@ public class Customer {
 
       // E-Mail abfragen
       public String getEmail() {
-            return this.e_mail;
+            return this.eMail;
       }
 
       // Newsletter abfragen
