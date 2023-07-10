@@ -120,63 +120,81 @@ public class CustomerController {
         int nr = IO.readInt("Kundennummer des zuupdatenden Kunden: ");
         System.out.println("");
 
-        String[][] valuesOfColumns = {
-                { "salulation", "String", "Anrede: " },
-                { "titel", "String", "Titel: " },
-                { "name", "String", "Vorname: " },
-                { "lastName", "String", "Nachname: " },
-                { "birthdate", "String", "Geburtsdatum: " },
-                { "street", "String", "Straße: " },
-                { "streetNumber", "Int", "Hausnr.: " },
-                { "postcode", "Int", "PLZ: " },
-                { "town", "String", "Stadt: " },
-                { "phoneNumber", "String", "Telefonnr.: " },
-                { "mobilephoneNumeber", "String", "Handynr.: " },
-                { "fax", "String", "Fax: " },
-                { "email", "String", "Email: " },
-                { "newsletter", "String", "Newsletter: Ja/Nein " }
-        };
+        String query = "SELECT * FROM pilot_customers.customers WHERE customer_number = " + nr + ";";
 
-        String stringForUpdate = "UPDATE pilot_customers.customers SET";
-        for (int i = 0; i < valuesOfColumns.length; i++) {
-            String column = valuesOfColumns[i][0];
-            String cast = valuesOfColumns[i][1];
-            String request = valuesOfColumns[i][2];
+        // Kunden holen
+        List<Customer> customers = CustomerService.main(null, query);
+        // Eingabe der Veränderungen + Anzeige des letzen Standes
+        for (Customer customer : customers) {
 
-            if (cast.equals("Int")) {
-                int value = IO.readInt(request);
-                if (value != 0) {
-                    stringForUpdate = String.format("%s %s = %d,", stringForUpdate, column, value);
+            System.out.println("\n---Für keine Veränderung: 0---\n");
+
+            String salutation = IO.readString(String.format("Anrede Stand(%s): ", customer.getSalulation()));
+            String title = IO.readString(String.format("Titel Stand(%s): ", customer.getTitel()));
+            String name = IO.readString(String.format("Vorname Stand(%s): ", customer.getName()));
+            String lastName = IO.readString(String.format("Nachname Stand(%s): ", customer.getLastName()));
+            String birthdate = IO.readString(String.format("Geburtsdatum Stand(%s): ", customer.getBirthdate()));
+            String street = IO.readString(String.format("Straße Stand(%s): ", customer.getStreet()));
+            int streetnr = IO.readInt(String.format("Hausnr. Stand(%d): ", customer.getStreetnumber()));
+            int postcode = IO.readInt(String.format("PLZ Stand(%d): ", customer.getPostcode()));
+            String city = IO.readString(String.format("Stadt Stand(%s): ", customer.getTown()));
+            String phone = IO.readString(String.format("Telefonnr. Stand(%s): ", customer.getPhonenumber()));
+            String mobile = IO.readString(String.format("Handynr. Stand(%s): ", customer.getMobilephonenumeber()));
+            String fax = IO.readString(String.format("Fax Stand(%s): ", customer.getFax()));
+            String email = IO.readString(String.format("Email Stand(%s): ", customer.getEmail()));
+            String tempNewsletter = (IO
+                    .readString(
+                            String.format("Newsletter Stand(%s): ", customer.getNewsletter() == 1 ? "Ja" : "Nein")));
+
+            salutation = salutation.equals("0") == true ? customer.getSalulation() : salutation;
+            title = title.equals("0") == true ? customer.getTitel() : title;
+            name = name.equals("0") == true ? customer.getName() : name;
+            lastName = lastName.equals("0") == true ? customer.getLastName() : lastName;
+            birthdate = birthdate.equals("0") == true ? customer.getBirthdate() : birthdate;
+            street = street.equals("0") == true ? customer.getStreet() : street;
+            streetnr = streetnr == 0 ? customer.getStreetnumber() : streetnr;
+            postcode = postcode == 0 ? customer.getPostcode() : postcode;
+            city = city.equals("0") == true ? customer.getTown() : city;
+            phone = phone.equals("0") == true ? customer.getPhonenumber() : phone;
+            mobile = mobile.equals("0") == true ? customer.getMobilephonenumeber() : mobile;
+            fax = fax.equals("0") == true ? customer.getFax() : fax;
+            email = email.equals("0") == true ? customer.getEmail() : email;
+            int newsletter = tempNewsletter.equals("0") == true ? customer.getNewsletter()
+                    : tempNewsletter.equals("Ja") ? 1 : 0;
+
+            Customer ucustomer = new Customer(nr, salutation, title, name, lastName, birthdate, street, streetnr,
+                    postcode, city, phone, mobile, fax, email, newsletter);
+            // Anzeigen des neuen Stand
+            System.out.printf(
+                    "%-3s | %-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10s | %-10s | %-25s| %-17s | %-17s | %-17s | %-32s | %-12s%n",
+                    "Nr", "Anrede", "Titel", "Vorname", "Nachname", "Geburtsdatum", "Straße", "Hausnr.", "PLZ", "Ort",
+                    "Telefon", "Mobil", "Fax", "E-Mail", "Newsletter");
+            System.out.printf(
+                    "%-3d | %-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10d | %-10d | %-25s | %-17s | %-17s | %-17s | %-32s | %-12s%n",
+                    ucustomer.getCustomernumber(), ucustomer.getSalulation(), ucustomer.getTitel(), ucustomer.getName(),
+                    ucustomer.getLastName(), ucustomer.getBirthdate(), ucustomer.getStreet(),
+                    ucustomer.getStreetnumber(),
+                    ucustomer.getPostcode(), ucustomer.getTown(), ucustomer.getPhonenumber(),
+                    ucustomer.getMobilephonenumeber(),
+                    ucustomer.getFax(), ucustomer.getEmail(), (ucustomer.getNewsletter() == 1 ? "Ja" : "Nein"));
+
+            String isOkay = IO.readString("Richtig? j/n ");
+            System.out.println("");
+            // löschen & updaten
+
+            if (isOkay.equals("j")) {
+                boolean isDeleted = CustomerService.deleteCustomer(nr);
+                boolean isSuccess = CustomerService.insertCustomer(ucustomer);
+                if (isSuccess && isDeleted) {
+                    System.out.println("Erfolgreich!\n");
+                } else {
+                    System.out.println("Fehlgeschlagen!\n");
                 }
             } else {
-                String value = IO.readString(request);
-                if (!value.equals("0")) {
-                    if (column.equals("newsletter")) {
-                        stringForUpdate = String.format("%s %s = %d,", stringForUpdate, column,
-                                (value.equals("Ja") ? 1 : 0));
-                    } else {
-                        stringForUpdate = String.format("%s %s = '%s',", stringForUpdate, column, value);
-                    }
-                }
+                System.out.print("Abbruch\n");
             }
         }
-        stringForUpdate = String.format("%s WHERE customer_number = %d;",
-                stringForUpdate.substring(0, stringForUpdate.length() - 1), nr);
 
-        System.out.println("Query: \n" + stringForUpdate + "\n");
-        String isOkay = IO.readString("Richtig? j/n ");
-        System.out.println("");
-
-        if (isOkay.equals("j")) {
-            boolean isSuccess = true;// CustomerService.updateCustomer(customer);
-            if (isSuccess) {
-                System.out.println("Erfolgreich!\n");
-            } else {
-                System.out.println("Fehlgeschlagen!\n");
-            }
-        } else {
-            System.out.print("Abbruch\n");
-        }
         return;
     }
 
