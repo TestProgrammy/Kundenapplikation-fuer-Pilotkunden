@@ -6,15 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerService {
+    static String user = Access.user;
+    static String password = Access.password;
 
-    public static List<Customer> main(String[] args, String query) {
+    public static List<Customer> getCustomer(String query) {
         Connection conn = null;
         Statement stmt = null;
         List<Customer> customerList = new ArrayList<Customer>();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pilot_customers", "Testuser",
-                    "Test123456*");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pilot_customers", user, password);
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
@@ -30,12 +31,13 @@ public class CustomerService {
             }
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         } finally {
             try {
                 stmt.close();
                 conn.close();
             } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
         }
         return customerList;
@@ -50,8 +52,7 @@ public class CustomerService {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pilot_customers", "Testuser",
-                    "Test123456*");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pilot_customers", user, password);
             stmt = conn.createStatement();
             int rs = stmt.executeUpdate(deleteQuery);
 
@@ -60,13 +61,14 @@ public class CustomerService {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return false;
         } finally {
             try {
                 stmt.close();
                 conn.close();
             } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
         }
 
@@ -76,11 +78,11 @@ public class CustomerService {
     public static boolean insertCustomer(Customer customer) {
         String query = String.format(
                 "INSERT into pilot_customers.customers (customer_number, salutation, title, name, last_name, birth_date, street, street_number, postcode, town, phone_number, mobile_number, fax, e_mail, newsletter) values(%d, '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, '%s', '%s', '%s', '%s', '%s', %d);",
-                customer.getCustomernumber(), customer.getSalulation(), customer.getTitel(),
+                customer.getCustomerNumber(), customer.getSalutation(), customer.getTitel(),
                 customer.getName(), customer.getLastName(), customer.getBirthdate(), customer.getStreet(),
-                customer.getStreetnumber(),
+                customer.getStreetNumber(),
                 customer.getPostcode(), customer.getTown(),
-                customer.getPhonenumber(), customer.getMobilephonenumeber(),
+                customer.getPhoneNumber(), customer.getMobileNumber(),
                 customer.getFax(), customer.getEmail(),
                 customer.getNewsletter());
 
@@ -98,13 +100,14 @@ public class CustomerService {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return false;
         } finally {
             try {
                 stmt.close();
                 conn.close();
             } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
         }
 

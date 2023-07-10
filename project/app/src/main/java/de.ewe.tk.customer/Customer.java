@@ -1,6 +1,6 @@
 public class Customer {
       private final Integer customerNumber;
-      private final String salution;
+      private final String salutation;
       private final String title;
       private final String name;
       private final String lastName;
@@ -15,13 +15,12 @@ public class Customer {
       private final String eMail;
       private final Integer newsletter;
 
-      // Konstruktor, legt ein Kundenobjekt an und befüllt sie
-      public Customer(Integer customerNumber, String salution, String title, String name, String lastName,
+      public Customer(Integer customerNumber, String salutation, String title, String name, String lastName,
                   String birthDate, String street, Integer streetNumber, Integer postcode, String town,
                   String phoneNumber, String mobileNumber, String fax, String eMail, Integer newsletter) {
 
             this.customerNumber = customerNumber;
-            this.salution = salution;
+            this.salutation = salutation;
             this.title = title;
             this.name = name;
             this.lastName = lastName;
@@ -37,77 +36,62 @@ public class Customer {
             this.newsletter = newsletter;
       }
 
-      // Kundennummer abfragen
-      public Integer getCustomernumber() {
+      public Integer getCustomerNumber() {
             return this.customerNumber;
       }
 
-      // Geschlächt abfragen
-      public String getSalulation() {
-            return this.salution;
+      public String getSalutation() {
+            return this.salutation;
       }
 
-      // Titel abfragen
       public String getTitel() {
             return this.title;
       }
 
-      // Vorname des Kunden abfragen
       public String getName() {
             return this.name;
       }
 
-      // Nachname des Kunden abfragen
       public String getLastName() {
             return this.lastName;
       }
 
-      // Geburtsdatum abfragen
       public String getBirthdate() {
             return this.birthDate;
       }
 
-      // Straße abfragen
       public String getStreet() {
             return this.street;
       }
 
-      // Straßennummer abfragen
-      public Integer getStreetnumber() {
+      public Integer getStreetNumber() {
             return this.streetNumber;
       }
 
-      // Postleitzahl abfragen
       public Integer getPostcode() {
             return this.postcode;
       }
 
-      // Stadt abfragen
       public String getTown() {
             return this.town;
       }
 
-      // Telefonnummer abfragen
-      public String getPhonenumber() {
+      public String getPhoneNumber() {
             return this.phoneNumber;
       }
 
-      // Mobil Telefonnummer abfragen
-      public String getMobilephonenumeber() {
+      public String getMobileNumber() {
             return this.mobileNumber;
       }
 
-      // Fax abfragen
       public String getFax() {
             return this.fax;
       }
 
-      // E-Mail abfragen
       public String getEmail() {
             return this.eMail;
       }
 
-      // Newsletter abfragen
       public Integer getNewsletter() {
             return this.newsletter;
       }
