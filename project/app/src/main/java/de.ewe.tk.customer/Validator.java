@@ -1,50 +1,16 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import util.IO;
+import util.EA;
 
 public class Validator {
 
-    private static boolean isInteger(int value) {
-        String regex = "^[0-9]+$";
-        return isInteger(value, regex);
-    }
-
-    private static boolean isInteger(int value, String regex) {
-        try {
-            if (isMatch(String.format("%d", value), regex)) {
-                return true;
-            }
-            return false;
-        } catch (Exception e) {
-            e.getMessage();
-            e.getStackTrace();
-        }
-        return false;
-    }
-
-    private static boolean isString(String value) {
-        try {
-            String.valueOf(value);
-            Double.parseDouble(value);
-            return true;
-        } catch (NullPointerException e) {
-            return false;
-        } catch (NumberFormatException e) {
-        }
-        return true;
-    }
-
     private static String validateNormalString(String value, String original) {
-        if (isString(value)) {
-            if (value.equals("")) {
-                return original;
-            }
-            value.trim();
-            return value;
-        } else {
+        if (value.equals("")) {
             return original;
         }
+        value.trim();
+        return value;
     }
 
     private static String validateRegexString(String value, String original, String regex) {
@@ -65,29 +31,35 @@ public class Validator {
         return false;
     }
 
-    public static Integer validateCustomerNumber(int customerNumber) {
-        if (isInteger(customerNumber)) {
-        }
+    public static Integer validateCustomerNumber(String message) {
+        int customerNumber = EA.readInt("Kundennummer: ");
         try {
-            Integer.valueOf(customerNumber);
+            // kundennummer abfragen, ob da
             return customerNumber;
-        } catch (NumberFormatException e) {
-            customerNumber = IO.readInt("Falsche Eingabe der Kundennummer. Kundennummer: ");
-            return validateCustomerNumber(customerNumber);
+        } catch (Exception e) {
+            System.out.print("Falsche Eingabe. ");
+            return validateCustomerNumber(message);
         }
     }
 
-    public static String validateSalutation(String salutation, String original) {
+    public static String validateSalutation(String message, String original) {
+        String salutation = EA.readString(message);
+        // auf Frau und Herr einschränken?
         String returnValue = validateNormalString(salutation, original);
-        return returnValue.equals(null) ? (validateSalutation(IO.readString("Falsche Eingabe. Anrede: "), original))
-                : original;
+        if (!returnValue.equals(null)) {
+            return returnValue;
+        } else {
+            System.out.print("Falsche Eingabe. ");
+            return validateSalutation(message, original);
+        }
     }
 
-    public static String validateTitel(String title, String original) {
+    public static String validateTitel(String message, String original) {
+        String title = EA.readString(message);
         String returnValue;
         if (isString(title)) {
             if (title.equals("") && !original.equals("")) {
-                String isNoChangeWanted = IO.readString("Gibt es keinen Title? j/n ");
+                String isNoChangeWanted = EA.readString("Gibt es keinen Title? j/n ");
                 if (!isNoChangeWanted.equals("j")) {
                     returnValue = original;
                 } else {
@@ -100,102 +72,129 @@ public class Validator {
         } else {
             returnValue = original;
         }
-        return returnValue.equals(null) ? (validateTitel(IO.readString("Falsche Eingabe. Title: "), original))
-                : original;
+        if (!returnValue.equals(null)) {
+            return returnValue;
+        } else {
+            System.out.print("Falsche Eingabe. ");
+            return validateTitel(String.format("Falsche Eingabe. %s", message), original);
+        }
     }
 
-    public static String validateName(String name, String original) {
+    public static String validateName(String message, String original) {
+        String name = EA.readString(message);
         String returnValue = validateNormalString(name, original);
-        return returnValue.equals(null) ? (validateName(IO.readString("Falsche Eingabe. Vorname: "), original))
-                : original;
+        if (!returnValue.equals(null)) {
+            return returnValue;
+        } else {
+            System.out.print("Falsche Eingabe. ");
+            return validateName(String.format("Falsche Eingabe. %s", message), original);
+        }
     }
 
-    public static String validateLastName(String lastName, String original) {
+    public static String validateLastName(String message, String original) {
+        String lastName = EA.readString(message);
         String returnValue = validateNormalString(lastName, original);
-        return returnValue.equals(null) ? (validateLastName(IO.readString("Falsche Eingabe. Nachname: "), original))
-                : original;
+        if (!returnValue.equals(null)) {
+            return returnValue;
+        } else {
+            System.out.print("Falsche Eingabe. ");
+            return validateLastName(String.format("Falsche Eingabe. %s", message), original);
+        }
     }
 
-    public static String validateBirthdate(String birthdate, String original) {
+    public static String validateBirthdate(String message, String original) {
+        String birthdate = EA.readString(message);
         String regex = "^[1-2][0-9]{3}-(0\\d|1[0-2])-([0-2]\\d|3[0-1])$";
         String returnValue = validateRegexString(birthdate, original, regex);
-        return returnValue.equals(null) ? (validateBirthdate(IO.readString("Falsche Eingabe. Geburtstag: "), original))
-                : original;
+        if (!returnValue.equals(null)) {
+            return returnValue;
+        } else {
+            System.out.print("Falsche Eingabe. ");
+            return validateBirthdate(String.format("Falsche Eingabe. %s", message), original);
+        }
     }
 
-    public static String validateStreet(String street, String original) {
+    public static String validateStreet(String message, String original) {
+        String street = EA.readString(message);
         String returnValue = validateNormalString(street, original);
-        return returnValue.equals(null) ? (validateStreet(IO.readString("Falsche Eingabe. Straße: "), original))
-                : original;
+        if (!returnValue.equals(null)) {
+            return returnValue;
+        } else {
+            System.out.print("Falsche Eingabe. ");
+            return validateStreet(String.format("Falsche Eingabe. %s", message), original);
+        }
     }
 
-    public static Integer validateStreetNumber(int streetNumber, int original) {
+    public static Integer validateStreetNumber(String message, int original) {
+        int streetNumber = EA.readInt(message);
         int returnValue = isInteger(streetNumber) ? streetNumber : original;
-        return returnValue == Integer.MIN_VALUE
-                ? (validateStreetNumber(IO.readInt("Falsche Eingabe. Hausnr.: "), original))
-                : original;
+        if (returnValue != Integer.MIN_VALUE) {
+            return returnValue;
+        } else {
+            System.out.print("Falsche Eingabe. ");
+            return validateStreetNumber(String.format("Falsche Eingabe. %s", message), original);
+        }
     }
 
-    public static Integer validatePostcode(int postcode, int original) {
+    public static Integer validatePostcode(String message, int original) {
+        int postcode = EA.readInt(message);
         String regex = "^[0-9]{4,5}$";
         if (isInteger(postcode, regex)) {
             return postcode;
         }
-        return original == Integer.MIN_VALUE ? (validatePostcode(IO.readInt("Falsche Eingabe. PLZ: "), original))
+        return original == Integer.MIN_VALUE
+                ? (validatePostcode(String.format("Falsche Eingabe. %s", message), original))
                 : original;
     }
 
-    public static String validateTown(String town, String original) {
+    public static String validateTown(String message, String original) {
+        String town = EA.readString(message);
         String returnValue = validateNormalString(town, original);
-        return returnValue.equals(null) ? (validateTown(IO.readString("Falsche Eingabe. Stadt: "), original))
+        return returnValue.equals(null) ? (validateTown(String.format("Falsche Eingabe. %s", message), original))
                 : original;
     }
 
-    public static String validatePhoneNumber(String num, String original) {
+    public static String validatePhoneNumber(String message, String original) {
         String regex = "^0\\d{3,4}/\\d{7,8}$";
+        String num = EA.readString(message);
         String returnValue = validateRegexString(num, original, regex);
-        return returnValue.equals(null) ? (validatePhoneNumber(IO.readString("Falsche Eingabe. Telefon: "), original))
+        return returnValue.equals(null) ? (validatePhoneNumber(String.format("Falsche Eingabe. %s", message), original))
                 : original;
     }
 
-    public static String validateMobilenumber(String num, String original) {
+    public static String validateMobileNumber(String message, String original) {
         String regex = "^01\\d{2}/\\d{7}$";
+        String num = EA.readString(message);
         String returnValue = validateRegexString(num, original, regex);
-        return returnValue.equals(null) ? (validateMobilenumber(IO.readString("Falsche Eingabe. Mobile: "), original))
+        return returnValue.equals(null)
+                ? (validateMobileNumber(String.format("Falsche Eingabe. %s", message), original))
                 : original;
     }
 
-    public static String validateFax(String num, String original) {
+    public static String validateFax(String message, String original) {
         String regex = "^0\\d{2,4}/\\d{6,8}$";
+        String numj = EA.readString(message);
         String returnValue = validateRegexString(num, original, regex);
-        return returnValue.equals(null) ? (validateFax(IO.readString("Falsche Eingabe. Fax: "), original)) : original;
-    }
-
-    public static String validateEmail(String eMail, String original) {
-        String regex = "^[a-zA-Z.]+[@][a-zA-Z]+[.](xyz|com|de)$";
-        String returnValue = validateRegexString(eMail, original, regex);
-        return returnValue.equals(null) ? (validateEmail(IO.readString("Falsche Eingabe. E-Mail: "), original))
+        return returnValue.equals(null) ? (validateFax(String.format("Falsche Eingabe. %s", message), original))
                 : original;
     }
 
-    public static Integer validateNewsletter(String newsletter, int original) {
-        int returnValue;
-        try {
-            String.valueOf(newsletter);
-            Double.parseDouble(newsletter);
+    public static String validateEmail(String message, String original) {
+        String regex = "^[a-zA-Z.]+[@][a-zA-Z]+[.](xyz|com|de)$";
+        String eMail = EA.readString(message);
+        String returnValue = validateRegexString(eMail, original, regex);
+        return returnValue.equals(null) ? (validateEmail(String.format("Falsche Eingabe. %s", message), original))
+                : original;
+    }
+
+    public static Integer validateNewsletter(String message, int original) {
+        String newsletter = EA.readString("Newsletter: Ja/Nein");
+        int returnValue = newsletter.equals("Ja") ? 1 : newsletter.equals("Nein") ? 0 : 2;
+        if (returnValue == 2) {
             returnValue = original;
-        } catch (NullPointerException e) {
-            returnValue = original;
-        } catch (NumberFormatException e) {
-            int value = newsletter.equals("Ja") ? 1 : newsletter.equals("Nein") ? 0 : 2;
-            if (value == 2) {
-                returnValue = original;
-            } else {
-                returnValue = value;
-            }
         }
         return returnValue == Integer.MIN_VALUE
-                ? (validateNewsletter(IO.readString("Falsche Eingabe. Newsletter: Ja/Nein"), original))
+                ? (validateNewsletter(String.format("Falsche Eingabe. %s", message), original))
                 : original;
     }
 }

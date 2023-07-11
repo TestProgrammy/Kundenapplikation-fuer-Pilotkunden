@@ -9,7 +9,7 @@ public class CustomerController {
         System.out.printf("user: %s password: %s", Access.user, Access.password);
         String[] choices = { "1. Neukunden einpflegen", "2. Kundendaten verändern", "3. Kunden löschen",
                 "4. Kunden suchen",
-                "5. Alle Kunden anzeigen", "6. Beenden" };
+                "5. Alle Kunden anzeigen", "6. Beenden", "7. Test" };
 
         while (true) {
             System.out.println("\nWas wollen Sie tun?\n");
@@ -61,6 +61,9 @@ public class CustomerController {
                 case 6:
                     System.exit(0);
                     break;
+                case 7:
+                    Test.Test();
+                    break;
                 default:
             }
             waitForEnter();
@@ -84,32 +87,25 @@ public class CustomerController {
         int placeholderAndCheck = Integer.MIN_VALUE;
 
         Customer customer = new Customer(
-                Validator.validateCustomerNumber(IO.readInt("Kundennummer: ")),
-                Validator.validateSalutation(IO.readString("Anrede: "), null),
-                Validator.validateTitel(IO.readString("Titel: "), null),
-                Validator.validateName(IO.readString("Vorname: "), null),
-                Validator.validateLastName(IO.readString("Nachname: "), null),
-                Validator.validateBirthdate(IO.readString("Geburtsdatum: "), null),
-                Validator.validateStreet(IO.readString("Straße: "), null),
-                Validator.validateStreetNumber(IO.readInt("Hausnr.: "), placeholderAndCheck),
-                Validator.validatePostcode(IO.readInt("PLZ: "), placeholderAndCheck),
-                Validator.validateTown(IO.readString("Stadt: "), null),
-                Validator.validatePhoneNumber(IO.readString("Telefonnr.: "), null),
-                Validator.validateMobilenumber(IO.readString("Handynr.: "), null),
-                Validator.validateFax(IO.readString("Fax: "), null),
-                Validator.validateEmail(IO.readString("Email: "), null),
-                Validator.validateNewsletter(IO.readString("Newsletter: Ja/Nein "), placeholderAndCheck));
+                Validator.validateCustomerNumber("Kundennummer: "),
+                Validator.validateSalutation("Anrede: ", null),
+                Validator.validateTitel("Titel: ", null),
+                Validator.validateName("Vorname: ", null),
+                Validator.validateLastName("Nachname: ", null),
+                Validator.validateBirthdate("Geburtstag: ", null),
+                Validator.validateStreet("Straße: ", null),
+                Validator.validateStreetNumber("Hausnr.:", placeholderAndCheck),
+                Validator.validatePostcode("PLZ: ", placeholderAndCheck),
+                Validator.validateTown("Stadt: ", null),
+                Validator.validatePhoneNumber("Telefon: ", null),
+                Validator.validateMobileNumber("Mobile: ", null),
+                Validator.validateFax("Fax: ", null),
+                Validator.validateEmail("E-Mail: ", null),
+                Validator.validateNewsletter("Newsletter: Ja/Nein", placeholderAndCheck));
 
-        System.out.printf(
-                "%-3s | %-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10s | %-10s | %-25s| %-17s | %-17s | %-17s | %-32s | %-12s%n",
-                "Nr", "Anrede", "Titel", "Vorname", "Nachname", "Geburtsdatum", "Straße", "Hausnr.", "PLZ", "Ort",
-                "Telefon", "Mobil", "Fax", "E-Mail", "Newsletter");
-        System.out.printf(
-                "%-3d | %-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10d | %-10d | %-25s | %-17s | %-17s | %-17s | %-32s | %-12s%n",
-                customer.getCustomerNumber(), customer.getSalutation(), customer.getTitel(), customer.getName(),
-                customer.getLastName(), customer.getBirthdate(), customer.getStreet(), customer.getStreetNumber(),
-                customer.getPostcode(), customer.getTown(), customer.getPhoneNumber(), customer.getMobileNumber(),
-                customer.getFax(), customer.getEmail(), (customer.getNewsletter() == 1 ? "Ja" : "Nein"));
+        List<Customer> customerList = new ArrayList<Customer>();
+        customerList.add(customer);
+        OutputCustomerService.showUsers(null, customerList);
 
         String isInputOkay = IO.readString("Ist ihre Eingabe so richtig? j/n ");
         if (isInputOkay.equals("j")) {
@@ -136,52 +132,35 @@ public class CustomerController {
         List<Customer> customers = CustomerService.getCustomer(query);
 
         for (Customer customer : customers) {
-            String test = "2";
-            do {
-                int customerNumber2 = Validator
-                        .validateCustomerNumber(IO.readInt("Kundennummer des zuupdatenden Kunden: "));
-                System.out.println("nochmal");
-            } while (test.equals("2"));
+            System.out.println("\n---Für keine Veränderung Enter drücken---\n");
 
-            System.out.println("\n---Für keine Veränderung: 0---\n");
-
-            String salutation = IO.readString(String.format("Anrede Stand(%s): ", customer.getSalutation()));
-            String title = IO.readString(String.format("Titel Stand(%s): ", customer.getTitel()));
-            String name = IO.readString(String.format("Vorname Stand(%s): ", customer.getName()));
-            String lastName = IO.readString(String.format("Nachname Stand(%s): ", customer.getLastName()));
-            String birthdate = IO.readString(String.format("Geburtsdatum Stand(%s): ", customer.getBirthdate()));
-            String street = IO.readString(String.format("Straße Stand(%s): ", customer.getStreet()));
-            int streetnr = IO.readInt(String.format("Hausnr. Stand(%d): ", customer.getStreetNumber()));
-            int postcode = IO.readInt(String.format("PLZ Stand(%d): ", customer.getPostcode()));
-            String city = IO.readString(String.format("Stadt Stand(%s): ", customer.getTown()));
-            String phone = IO.readString(String.format("Telefonnr. Stand(%s): ", customer.getPhoneNumber()));
-            String mobile = IO.readString(String.format("Handynr. Stand(%s): ", customer.getMobileNumber()));
-            String fax = IO.readString(String.format("Fax Stand(%s): ", customer.getFax()));
-            String email = IO.readString(String.format("Email Stand(%s): ", customer.getEmail()));
-            String tempNewsletter = (IO
-                    .readString(
-                            String.format("Newsletter Stand(%s): ", customer.getNewsletter() == 1 ? "Ja" : "Nein")));
-
-            salutation = salutation.equals("0") == true ? customer.getSalutation() : salutation;
-            title = title.equals("0") == true ? customer.getTitel() : title;
-            name = name.equals("0") == true ? customer.getName() : name;
-            lastName = lastName.equals("0") == true ? customer.getLastName() : lastName;
-            birthdate = birthdate.equals("0") == true ? customer.getBirthdate() : birthdate;
-            street = street.equals("0") == true ? customer.getStreet() : street;
-            streetnr = streetnr == 0 ? customer.getStreetNumber() : streetnr;
-            postcode = postcode == 0 ? customer.getPostcode() : postcode;
-            city = city.equals("0") == true ? customer.getTown() : city;
-            phone = phone.equals("0") == true ? customer.getPhoneNumber() : phone;
-            mobile = mobile.equals("0") == true ? customer.getMobileNumber() : mobile;
-            fax = fax.equals("0") == true ? customer.getFax() : fax;
-            email = email.equals("0") == true ? customer.getEmail() : email;
-            int newsletter = tempNewsletter.equals("0") == true ? customer.getNewsletter()
-                    : tempNewsletter.equals("Ja") ? 1 : 0;
-
-            Customer updatedCustomer = new Customer(customerNumber, salutation, title, name, lastName, birthdate,
-                    street,
-                    streetnr,
-                    postcode, city, phone, mobile, fax, email, newsletter);
+            Customer updatedCustomer = new Customer(
+                    Validator.validateCustomerNumber("Kundennummer: "),
+                    Validator.validateSalutation(String.format("Anrede: Stand(%s)", customer.getSalutation()),
+                            customer.getSalutation()),
+                    Validator.validateTitel(String.format("Titel: Stand(%s)", customer.getTitel()),
+                            customer.getTitel()),
+                    Validator.validateName(String.format("Vorname: Stand(%s)", customer.getName()), customer.getName()),
+                    Validator.validateLastName(String.format("Nachname: Stand(%s)", customer.getLastName()),
+                            customer.getLastName()),
+                    Validator.validateBirthdate(String.format("Geburtstag: Stand(%s)", customer.getBirthdate()),
+                            customer.getBirthdate()),
+                    Validator.validateStreet(String.format("Straße: Stand(%s)", customer.getStreet()),
+                            customer.getStreet()),
+                    Validator.validateStreetNumber(String.format("Hausnr.: Stand(%s)", customer.getStreetNumber()),
+                            customer.getStreetNumber()),
+                    Validator.validatePostcode(String.format("PLZ: Stand(%s)", customer.getPostcode()),
+                            customer.getPostcode()),
+                    Validator.validateTown(String.format("Stadt: Stand(%s)", customer.getTown()), customer.getTown()),
+                    Validator.validatePhoneNumber(String.format("Telefon: Stand(%s)", customer.getPhoneNumber()),
+                            customer.getPhoneNumber()),
+                    Validator.validateMobileNumber(String.format("Mobile: Stand(%s)", customer.getMobileNumber()),
+                            customer.getMobileNumber()),
+                    Validator.validateFax(String.format("Fax: Stand(%s)", customer.getFax()), customer.getFax()),
+                    Validator.validateEmail(String.format("E-Mail: Stand(%s)", customer.getEmail()),
+                            customer.getEmail()),
+                    Validator.validateNewsletter(String.format("Newsletter: Ja/Nein Stand(%s)",
+                            customer.getNewsletter() == 1 ? "Ja" : "Nein"), customer.getNewsletter()));
 
             List<Customer> customerList = new ArrayList<Customer>();
             customerList.add(updatedCustomer);
@@ -191,14 +170,10 @@ public class CustomerController {
             System.out.println("");
 
             if (isInputOkay.equals("j")) {
-                boolean isDeleted = CustomerService.deleteCustomer(customerNumber);
-                boolean isSuccess = CustomerService.insertCustomer(updatedCustomer);
-                if (isSuccess && isDeleted) {
+                boolean isSuccess = CustomerService.updateCustomer(updatedCustomer);
+                if (isSuccess) {
                     System.out.println("Der Kunde wurde erfolgreich verändert!\n");
                 } else {
-                    if (!isDeleted) {
-                        System.out.println("Der Kunde wurde während der Veränderung gelöscht.");
-                    }
                     System.out.println("Der Kunde konnte nicht verändert werden!\n");
                 }
             } else {
