@@ -1,98 +1,191 @@
+import util.IO;
+
 public class Validation {
-    private final Integer customerNumber;
-    private final String salutation;
-    private final String title;
-    private final String name;
-    private final String lastName;
-    private final String birthDate;
-    private final String street;
-    private final Integer streetNumber;
-    private final Integer postcode;
-    private final String town;
-    private final String phoneNumber;
-    private final String mobileNumber;
-    private final String fax;
-    private final String eMail;
-    private final Integer newsletter;
 
-    public Validation(Integer customerNumber, String salutation, String title, String name, String lastName,
-            String birthDate, String street, Integer streetNumber, Integer postcode, String town,
-            String phoneNumber, String mobileNumber, String fax, String eMail, Integer newsletter) {
-
-        this.customerNumber = customerNumber;
-        this.salutation = salutation;
-        this.title = title;
-        this.name = name;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-        this.street = street;
-        this.streetNumber = streetNumber;
-        this.postcode = postcode;
-        this.town = town;
-        this.phoneNumber = phoneNumber;
-        this.mobileNumber = mobileNumber;
-        this.fax = fax;
-        this.eMail = eMail;
-        this.newsletter = newsletter;
+    private static boolean isInteger(int value) {
+        return true;
     }
 
-    public Integer validateCustomerNumber() {
-        return this.customerNumber;
+    private static boolean isString(String value) {
+        try {
+            String.valueOf(value);
+            Double.parseDouble(value);
+            return true;
+        } catch (NullPointerException e) {
+            return false;
+        } catch (NumberFormatException e) {
+        }
+        return true;
     }
 
-    public String validateSalutation() {
-        return this.salutation;
+    private static String validateNormalString(String value, String original) {
+        if (isString(value)) {
+            if (value.equals("")) {
+                return original;
+            }
+            // trim?
+            return value;
+        } else {
+            return original;
+        }
     }
 
-    public String validateTitel() {
-        return this.title;
+    public static Integer validateCustomerNumber(int customerNumber) {
+        if (isInteger(customerNumber)) {
+        }
+        try {
+            Integer.valueOf(customerNumber);
+            return customerNumber;
+        } catch (NumberFormatException e) {
+            customerNumber = IO.readInt("Kundennummer des zuupdatenden Kunden: ");
+            return validateCustomerNumber(customerNumber);
+        }
     }
 
-    public String validateName() {
-        return this.name;
+    public static String validateSalutation(String salutation, String original) {
+        return validateNormalString(salutation, original);
     }
 
-    public String validateLastName() {
-        return this.lastName;
+    public static String validateTitel(String str, String original) {
+        // was mit empthy -> nachfragen
+        try {
+            Integer.valueOf(str);
+            return str;
+        } catch (NumberFormatException e) {
+            return original;
+        }
     }
 
-    public String validateBirthdate() {
-        return this.birthDate;
+    public static String validateName(String name, String original) {
+        try {
+            String.valueOf(name);
+            Double.parseDouble(name);
+            return original;
+        } catch (NullPointerException e) {
+            return original;
+        } catch (NumberFormatException e) {
+        }
+        return name;
     }
 
-    public String validateStreet() {
-        return this.street;
+    public static String validateLastName(String lastName, String original) {
+        try {
+            String.valueOf(lastName);
+            Double.parseDouble(lastName);
+            return original;
+        } catch (NullPointerException e) {
+            return original;
+        } catch (NumberFormatException e) {
+        }
+        return lastName;
     }
 
-    public Integer validateStreetNumber() {
-        return this.streetNumber;
+    public static String validateBirthdate(String str, String original) {
+        // regex
+        try {
+            Integer.valueOf(str);
+            return str;
+        } catch (NumberFormatException e) {
+            return original;
+        }
     }
 
-    public Integer validatePostcode() {
-        return this.postcode;
+    public static String validateStreet(String street, String original) {
+        try {
+            String.valueOf(street);
+            Double.parseDouble(street);
+            return original;
+        } catch (NullPointerException e) {
+            return original;
+        } catch (NumberFormatException e) {
+        }
+        return street;
     }
 
-    public String validateTown() {
-        return this.town;
+    public static Integer validateStreetNumber(int num, int original) {
+        try {
+            Integer.valueOf(num);
+            return num;
+        } catch (NumberFormatException e) {
+            return original;
+        }
     }
 
-    public String validatePhoneNumber() {
-        return this.phoneNumber;
+    public static Integer validatePostcode(int num, int original) {
+        // regex for length
+        try {
+            Integer.valueOf(num);
+            return num;
+        } catch (NumberFormatException e) {
+            return original;
+        }
     }
 
-    public String validateMobileNumeber() {
-        return this.mobileNumber;
+    public static String validateTown(String town, String original) {
+        try {
+            String.valueOf(town);
+            Double.parseDouble(town);
+            return original;
+        } catch (NullPointerException e) {
+            return original;
+        } catch (NumberFormatException e) {
+        }
+        return town;
     }
 
-    public String validateFax() {
-        return this.fax;
+    public static String validatePhoneNumber(String str, String original) {
+        // regex
+        try {
+            Integer.valueOf(str);
+            return str;
+        } catch (NumberFormatException e) {
+            return original;
+        }
     }
 
-    public String validateEmail() {
-        return this.eMail;
+    public static String validateMobilenumber(String str, String original) {
+        // regex
+        try {
+            Integer.valueOf(str);
+            return str;
+        } catch (NumberFormatException e) {
+            return original;
+        }
     }
 
-    public Integer validateNewsletter() {
-        return this.newsletter;
+    public static String validateFax(String str, String original) {
+        // regex
+        try {
+            Integer.valueOf(str);
+            return str;
+        } catch (NumberFormatException e) {
+            return original;
+        }
+    }
+
+    public static String validateEmail(String eMail, String original) {
+        // regex
+        try {
+            String.valueOf(eMail);
+            return eMail;
+        } catch (NumberFormatException e) {
+            return original;
+        }
+    }
+
+    public static Integer validateNewsletter(String newsletter, int original) {
+        try {
+            String.valueOf(newsletter);
+            Double.parseDouble(newsletter);
+            return original;
+        } catch (NullPointerException e) {
+            return original;
+        } catch (NumberFormatException e) {
+        }
+        int value = newsletter.equals("Ja") ? 1 : newsletter.equals("Nein") ? 0 : 2;
+        if (value == 2) {
+            return original;
+        }
+        return value;
     }
 }

@@ -10,7 +10,13 @@ public class OutputCustomerService {
     }
 
     static void showUsers(String query) {
-        List<Customer> CustomerList = CustomerService.getCustomer(query);
+        showUsers(query, null);
+    }
+
+    static void showUsers(String query, List<Customer> CustomerList) {
+        if (CustomerList == null) {
+            CustomerList = CustomerService.getCustomer(query);
+        }
 
         System.out.printf(
                 "%-3s | %-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10s | %-10s | %-25s | %-17s | %-17s | %-17s | %-32s | %-12s%n",

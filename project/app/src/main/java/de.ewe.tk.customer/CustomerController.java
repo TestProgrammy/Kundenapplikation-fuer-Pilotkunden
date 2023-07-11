@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 import util.IO;
@@ -124,6 +125,12 @@ public class CustomerController {
         List<Customer> customers = CustomerService.getCustomer(query);
 
         for (Customer customer : customers) {
+            String test = "2";
+            do {
+                int customerNumber2 = Validation
+                        .validateCustomerNumber(IO.readInt("Kundennummer des zuupdatenden Kunden: "));
+                System.out.println("nochmal");
+            } while (test.equals("2"));
 
             System.out.println("\n---Für keine Veränderung: 0---\n");
 
@@ -165,20 +172,9 @@ public class CustomerController {
                     streetnr,
                     postcode, city, phone, mobile, fax, email, newsletter);
 
-            System.out.printf(
-                    "%-3s | %-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10s | %-10s | %-25s| %-17s | %-17s | %-17s | %-32s | %-12s%n",
-                    "Nr", "Anrede", "Titel", "Vorname", "Nachname", "Geburtsdatum", "Straße", "Hausnr.", "PLZ", "Ort",
-                    "Telefon", "Mobil", "Fax", "E-Mail", "Newsletter");
-            System.out.printf(
-                    "%-3d | %-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10d | %-10d | %-25s | %-17s | %-17s | %-17s | %-32s | %-12s%n",
-                    updatedCustomer.getCustomerNumber(), updatedCustomer.getSalutation(), updatedCustomer.getTitel(),
-                    updatedCustomer.getName(),
-                    updatedCustomer.getLastName(), updatedCustomer.getBirthdate(), updatedCustomer.getStreet(),
-                    updatedCustomer.getStreetNumber(),
-                    updatedCustomer.getPostcode(), updatedCustomer.getTown(), updatedCustomer.getPhoneNumber(),
-                    updatedCustomer.getMobileNumber(),
-                    updatedCustomer.getFax(), updatedCustomer.getEmail(),
-                    (updatedCustomer.getNewsletter() == 1 ? "Ja" : "Nein"));
+            List<Customer> customerList = new ArrayList<Customer>();
+            customerList.add(updatedCustomer);
+            OutputCustomerService.showUsers(null, customerList);
 
             String isInputOkay = IO.readString("Ist ihre Eingabe so richtig? j/n ");
             System.out.println("");
