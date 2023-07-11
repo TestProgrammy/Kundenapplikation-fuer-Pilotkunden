@@ -86,7 +86,7 @@ public class CustomerController {
                 newsletter;
         do {
             customerNumber = EA.readInt("Kundennummer: ");
-        } while (!Validator.validateCustomerNumber(customerNumber));
+        } while (!(Validator.validateCustomerNumber(customerNumber)));
         do {
             salutation = EA.readString("Anrede: ");
         } while (!Validator.validateSalutation(salutation));

@@ -11,8 +11,8 @@ public class Validator {
     }
 
     public static boolean validateCustomerNumber(int customerNumber) {
-        String regex = "^\\d+$";
-        boolean isValid = isMatch(String.format("/d", customerNumber), regex);
+        String regex = "^[0-9]+$";
+        boolean isValid = isMatch(String.format("%d", customerNumber), regex);
         return isValid;
     }
 
