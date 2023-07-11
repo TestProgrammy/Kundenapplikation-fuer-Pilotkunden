@@ -12,7 +12,7 @@ public class EA {
             String eingabe = input.readLine();
             return Integer.parseInt(eingabe);
         } catch (Exception exc) {
-            return readInt(String.format("Falsche Eingabe. %s", aufforderung));
+            return readInt(aufforderung);
         }
     }
 
@@ -22,7 +22,7 @@ public class EA {
             BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
             return input.readLine();
         } catch (Exception e) {
-            return readString(String.format("Falsche Eingabe. %s", aufforderung));
+            return readString(aufforderung);
         }
     }
 }

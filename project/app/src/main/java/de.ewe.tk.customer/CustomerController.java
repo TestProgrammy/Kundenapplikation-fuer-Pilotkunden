@@ -86,49 +86,49 @@ public class CustomerController {
                 newsletter;
         do {
             customerNumber = EA.readInt("Kundennummer: ");
-        } while (Validator.validateCustomerNumber(customerNumber));
+        } while (!Validator.validateCustomerNumber(customerNumber));
         do {
             salutation = EA.readString("Anrede: ");
-        } while (Validator.validateSalutation(salutation));
+        } while (!Validator.validateSalutation(salutation));
         do {
             title = EA.readString("Titel: ");
-        } while (Validator.validateTitle(title));
+        } while (!Validator.validateTitle(title));
         do {
             name = EA.readString("Vorname: ");
-        } while (Validator.validateName(name));
+        } while (!Validator.validateName(name));
         do {
             lastName = EA.readString("Nachname: ");
-        } while (Validator.validateLastName(lastName));
+        } while (!Validator.validateLastName(lastName));
         do {
             birthdate = EA.readString("Geburtsdatum: ");
-        } while (Validator.validateBirthdate(birthdate));
+        } while (!Validator.validateBirthdate(birthdate));
         do {
             street = EA.readString("Straße: ");
-        } while (Validator.validateStreet(street));
+        } while (!Validator.validateStreet(street));
         do {
             streetNumber = EA.readInt("Hausnr.: ");
-        } while (Validator.validateStreetNumber(streetNumber));
+        } while (!Validator.validateStreetNumber(streetNumber));
         do {
             postcode = EA.readInt("PLZ: ");
-        } while (Validator.validatePostcode(postcode));
+        } while (!Validator.validatePostcode(postcode));
         do {
             town = EA.readString("Stadt: ");
-        } while (Validator.validateTown(town));
+        } while (!Validator.validateTown(town));
         do {
             phoneNumber = EA.readString("Telefonnr.: ");
-        } while (Validator.validatePhoneNumber(phoneNumber));
+        } while (!Validator.validatePhoneNumber(phoneNumber));
         do {
             mobilephoneNumber = EA.readString("Handynr.: ");
-        } while (Validator.validateMobileNumber(mobilephoneNumber));
+        } while (!Validator.validateMobileNumber(mobilephoneNumber));
         do {
             fax = EA.readString("Fax: ");
-        } while (Validator.validateFax(fax));
+        } while (!Validator.validateFax(fax));
         do {
             email = EA.readString("Email: ");
-        } while (Validator.validateEmail(email));
+        } while (!Validator.validateEmail(email));
         do {
             newsletter = EA.readString("Newsletter: j/n ");
-        } while (Validator.validateNewsletter(newsletter));
+        } while (!Validator.validateNewsletter(newsletter));
 
         Customer customer = new Customer(customerNumber, salutation, title, name, lastName, birthdate, street,
                 streetNumber, postcode, town, phoneNumber, mobilephoneNumber, fax, email,
@@ -158,7 +158,7 @@ public class CustomerController {
         System.out.println("Kunden updaten:\n");
         do {
             customerNumber = EA.readInt("Kundennummer des zuupdatenden Kunden: ");
-        } while (Validator.validateCustomerNumber(customerNumber));
+        } while (!Validator.validateCustomerNumber(customerNumber));
         String query = String.format("SELECT * FROM pilot_customers.customers WHERE customer_number = %d;",
                 customerNumber);
 
@@ -169,47 +169,47 @@ public class CustomerController {
 
             do {
                 salutation = EA.readString(String.format("Anrede: Stand(%s)", customer.getSalutation()));
-            } while (Validator.validateSalutation(salutation));
+            } while (!Validator.validateSalutation(salutation));
             do {
                 title = EA.readString(String.format("Titel: Stand(%s)", customer.getTitle()));
-            } while (Validator.validateTitle(title));
+            } while (!Validator.validateTitle(title));
             do {
                 name = EA.readString(String.format("Vorname: Stand(%s)", customer.getName()));
-            } while (Validator.validateName(name));
+            } while (!Validator.validateName(name));
             do {
                 lastName = EA.readString(String.format("Nachname: Stand(%s)", customer.getLastName()));
-            } while (Validator.validateLastName(lastName));
+            } while (!Validator.validateLastName(lastName));
             do {
                 birthdate = EA.readString(String.format("Geburtsdatum: Stand(%s)", customer.getBirthdate()));
-            } while (Validator.validateBirthdate(birthdate));
+            } while (!Validator.validateBirthdate(birthdate));
             do {
                 street = EA.readString(String.format("Straße: Stand(%s)", customer.getStreet()));
-            } while (Validator.validateStreet(street));
+            } while (!Validator.validateStreet(street));
             do {
                 streetNumber = EA.readInt(String.format("Hausnr.: Stand(%s)", customer.getStreetNumber()));
-            } while (Validator.validateStreetNumber(streetNumber));
+            } while (!Validator.validateStreetNumber(streetNumber));
             do {
                 postcode = EA.readInt(String.format("PLZ: Stand(%s)", customer.getPostcode()));
-            } while (Validator.validatePostcode(postcode));
+            } while (!Validator.validatePostcode(postcode));
             do {
                 town = EA.readString(String.format("Stadt: Stand(%s)", customer.getTown()));
-            } while (Validator.validateTown(town));
+            } while (!Validator.validateTown(town));
             do {
                 phoneNumber = EA.readString(String.format("Telefon: Stand(%s)", customer.getPhoneNumber()));
-            } while (Validator.validatePhoneNumber(phoneNumber));
+            } while (!Validator.validatePhoneNumber(phoneNumber));
             do {
                 mobilephoneNumber = EA.readString(String.format("Mobile: Stand(%s)", customer.getMobileNumber()));
-            } while (Validator.validateMobileNumber(mobilephoneNumber));
+            } while (!Validator.validateMobileNumber(mobilephoneNumber));
             do {
                 fax = EA.readString(String.format("Fax: Stand(%s)", customer.getFax()));
-            } while (Validator.validateFax(fax));
+            } while (!Validator.validateFax(fax));
             do {
                 email = EA.readString(String.format("Email: Stand(%s)", customer.getEmail()));
-            } while (Validator.validateEmail(email));
+            } while (!Validator.validateEmail(email));
             do {
                 newsletter = EA.readString(
                         String.format("Newsletter: Ja/Nein Stand(%s)", customer.getNewsletter() == 1 ? "Ja" : "Nein"));
-            } while (Validator.validateNewsletter(newsletter));
+            } while (!Validator.validateNewsletter(newsletter));
 
             Customer updatedCustomer = new Customer(customerNumber, salutation, title, name, lastName, birthdate,
                     street, streetNumber, postcode, town, phoneNumber, mobilephoneNumber, fax, email,
