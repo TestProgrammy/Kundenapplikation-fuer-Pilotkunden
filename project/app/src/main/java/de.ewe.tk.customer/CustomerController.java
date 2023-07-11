@@ -81,13 +81,24 @@ public class CustomerController {
 
     static void addUser() {
         System.out.println("Neuen Kunden eingeben:\n");
+        int placeholderAndCheck = Integer.MIN_VALUE;
 
-        Customer customer = new Customer(IO.readInt("Kundennummer: "), IO.readString("Anrede: "),
-                IO.readString("Titel: "), IO.readString("Vorname: "), IO.readString("Nachname: "),
-                IO.readString("Geburtsdatum: "), IO.readString("Straße: "), IO.readInt("Hausnr.: "),
-                IO.readInt("PLZ: "), IO.readString("Stadt: "), IO.readString("Telefonnr.: "),
-                IO.readString("Handynr.: "), IO.readString("Fax: "), IO.readString("Email: "),
-                IO.readInt("Newsletter: für Ja '1'/für Nein '0' "));
+        Customer customer = new Customer(
+                Validator.validateCustomerNumber(IO.readInt("Kundennummer: ")),
+                Validator.validateSalutation(IO.readString("Anrede: "), null),
+                Validator.validateTitel(IO.readString("Titel: "), null),
+                Validator.validateName(IO.readString("Vorname: "), null),
+                Validator.validateLastName(IO.readString("Nachname: "), null),
+                Validator.validateBirthdate(IO.readString("Geburtsdatum: "), null),
+                Validator.validateStreet(IO.readString("Straße: "), null),
+                Validator.validateStreetNumber(IO.readInt("Hausnr.: "), placeholderAndCheck),
+                Validator.validatePostcode(IO.readInt("PLZ: "), placeholderAndCheck),
+                Validator.validateTown(IO.readString("Stadt: "), null),
+                Validator.validatePhoneNumber(IO.readString("Telefonnr.: "), null),
+                Validator.validateMobilenumber(IO.readString("Handynr.: "), null),
+                Validator.validateFax(IO.readString("Fax: "), null),
+                Validator.validateEmail(IO.readString("Email: "), null),
+                Validator.validateNewsletter(IO.readString("Newsletter: Ja/Nein "), placeholderAndCheck));
 
         System.out.printf(
                 "%-3s | %-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10s | %-10s | %-25s| %-17s | %-17s | %-17s | %-32s | %-12s%n",
@@ -127,7 +138,7 @@ public class CustomerController {
         for (Customer customer : customers) {
             String test = "2";
             do {
-                int customerNumber2 = Validation
+                int customerNumber2 = Validator
                         .validateCustomerNumber(IO.readInt("Kundennummer des zuupdatenden Kunden: "));
                 System.out.println("nochmal");
             } while (test.equals("2"));

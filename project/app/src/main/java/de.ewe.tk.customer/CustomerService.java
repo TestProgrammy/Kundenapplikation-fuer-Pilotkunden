@@ -61,6 +61,8 @@ public class CustomerService {
             }
 
         } catch (Exception e) {
+            // fehler werfen zum testen
+            // feheler wenn nichts gelöscht wird?
             System.out.println(e.getMessage());
             return false;
         } finally {
@@ -85,6 +87,45 @@ public class CustomerService {
                 customer.getPhoneNumber(), customer.getMobileNumber(),
                 customer.getFax(), customer.getEmail(),
                 customer.getNewsletter());
+
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pilot_customers", "Testuser",
+                    "Test123456*");
+            stmt = conn.createStatement();
+            int rs = stmt.executeUpdate(query);
+
+            if (rs == 0) {
+                return false;
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        } finally {
+            try {
+                stmt.close();
+                conn.close();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return true;
+    }
+
+    public static boolean updateCustomer(Customer customer) {
+        String query = String.format(
+                "Update pilot_customers.customers SET salutation = '%s', title = '%s', name = '%s', last_name = '%s', birth_date = '%s', street = '%s', street_number = %d, postcode = %d, town = '%s', phone_number = '%s', mobile_number = '%s', fax = '%s', e_mail = '%s', newsletter = %d WHERE customer_number = %d;",
+                customer.getSalutation(), customer.getTitel(),
+                customer.getName(), customer.getLastName(), customer.getBirthdate(), customer.getStreet(),
+                customer.getStreetNumber(),
+                customer.getPostcode(), customer.getTown(),
+                customer.getPhoneNumber(), customer.getMobileNumber(),
+                customer.getFax(), customer.getEmail(),
+                customer.getNewsletter(), customer.getCustomerNumber());
 
         Connection conn = null;
         Statement stmt = null;
