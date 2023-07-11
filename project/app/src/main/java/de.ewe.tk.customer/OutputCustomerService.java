@@ -6,7 +6,6 @@ public class OutputCustomerService {
         String query = "SELECT * FROM pilot_customers.customers;";
         System.out.println("Alle Kunden:\n");
         showUsers(query);
-        return;
     }
 
     static void showUsers(String query) {
@@ -30,7 +29,7 @@ public class OutputCustomerService {
         for (Customer customer : CustomerList) {
             System.out.printf(
                     "%-3d | %-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10d | %-10d | %-25s | %-17s | %-17s | %-17s | %-32s | %-12s%n",
-                    customer.getCustomerNumber(), customer.getSalutation(), customer.getTitel(),
+                    customer.getCustomerNumber(), customer.getSalutation(), customer.getTitle(),
                     customer.getName(),
                     customer.getLastName(),
                     customer.getBirthdate(), customer.getStreet(), customer.getStreetNumber(),
@@ -40,6 +39,5 @@ public class OutputCustomerService {
                     customer.getFax(), customer.getEmail(),
                     customer.getNewsletter() == 1 ? "Ja" : "Nein");
         }
-        return;
     }
 }

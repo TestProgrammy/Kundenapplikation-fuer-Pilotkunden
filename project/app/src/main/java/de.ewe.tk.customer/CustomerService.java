@@ -80,7 +80,7 @@ public class CustomerService {
     public static boolean insertCustomer(Customer customer) {
         String query = String.format(
                 "INSERT into pilot_customers.customers (customer_number, salutation, title, name, last_name, birth_date, street, street_number, postcode, town, phone_number, mobile_number, fax, e_mail, newsletter) values(%d, '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, '%s', '%s', '%s', '%s', '%s', %d);",
-                customer.getCustomerNumber(), customer.getSalutation(), customer.getTitel(),
+                customer.getCustomerNumber(), customer.getSalutation(), customer.getTitle(),
                 customer.getName(), customer.getLastName(), customer.getBirthdate(), customer.getStreet(),
                 customer.getStreetNumber(),
                 customer.getPostcode(), customer.getTown(),
@@ -119,7 +119,7 @@ public class CustomerService {
     public static boolean updateCustomer(Customer customer) {
         String query = String.format(
                 "Update pilot_customers.customers SET salutation = '%s', title = '%s', name = '%s', last_name = '%s', birth_date = '%s', street = '%s', street_number = %d, postcode = %d, town = '%s', phone_number = '%s', mobile_number = '%s', fax = '%s', e_mail = '%s', newsletter = %d WHERE customer_number = %d;",
-                customer.getSalutation(), customer.getTitel(),
+                customer.getSalutation(), customer.getTitle(),
                 customer.getName(), customer.getLastName(), customer.getBirthdate(), customer.getStreet(),
                 customer.getStreetNumber(),
                 customer.getPostcode(), customer.getTown(),

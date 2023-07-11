@@ -44,7 +44,7 @@ public class Customer {
             return this.salutation;
       }
 
-      public String getTitel() {
+      public String getTitle() {
             return this.title;
       }
 

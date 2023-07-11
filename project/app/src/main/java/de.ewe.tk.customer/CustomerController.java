@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import util.IO;
+import util.EA;
 
 public class CustomerController {
     public static void main(String[] args) throws Exception {
@@ -9,7 +9,7 @@ public class CustomerController {
         System.out.printf("user: %s password: %s", Access.user, Access.password);
         String[] choices = { "1. Neukunden einpflegen", "2. Kundendaten verändern", "3. Kunden löschen",
                 "4. Kunden suchen",
-                "5. Alle Kunden anzeigen", "6. Beenden", "7. Test" };
+                "5. Alle Kunden anzeigen", "6. Beenden" };
 
         while (true) {
             System.out.println("\nWas wollen Sie tun?\n");
@@ -19,52 +19,48 @@ public class CustomerController {
             String isNotBreak;
 
             switch (choice) {
-                case 1:
+                case 1 -> {
                     do {
                         addUser();
-                        isNotBreak = IO.readString("Wollen Sie einen weiteren Kunden anlegen? j/n ");
+                        isNotBreak = EA.readString("Wollen Sie einen weiteren Kunden anlegen? j/n ");
                         if (!isNotBreak.equals("j")) {
                             break;
                         }
                     } while (true);
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     do {
                         updateUser();
-                        isNotBreak = IO.readString("Wollen Sie einen weiteren Kunden verändern? j/n ");
+                        isNotBreak = EA.readString("Wollen Sie einen weiteren Kunden verändern? j/n ");
                         if (!isNotBreak.equals("j")) {
                             break;
                         }
                     } while (true);
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     do {
                         deleteUser();
-                        isNotBreak = IO.readString("Wollen Sie einen weiteren Kunden löschen? j/n ");
+                        isNotBreak = EA.readString("Wollen Sie einen weiteren Kunden löschen? j/n ");
                         if (!isNotBreak.equals("j")) {
                             break;
                         }
                     } while (true);
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     do {
                         searchUser();
-                        isNotBreak = IO.readString("Wollen Sie nach einen weiteren Kunden suchen? j/n ");
+                        isNotBreak = EA.readString("Wollen Sie nach einen weiteren Kunden suchen? j/n ");
                         if (!isNotBreak.equals("j")) {
                             break;
                         }
                     } while (true);
-                    break;
-                case 5:
+                }
+                case 5 -> {
                     OutputCustomerService.showAllUsers();
-                    break;
-                case 6:
+                }
+                case 6 -> {
                     System.exit(0);
-                    break;
-                case 7:
-                    Test.Test();
-                    break;
-                default:
+                }
             }
             waitForEnter();
         }
@@ -78,36 +74,71 @@ public class CustomerController {
     }
 
     static int getInputUser() {
-        int choice = IO.readInt("Nummer: ");
+        int choice = EA.readInt("Nummer: ");
         return choice;
     }
 
     static void addUser() {
         System.out.println("Neuen Kunden eingeben:\n");
-        int placeholderAndCheck = Integer.MIN_VALUE;
 
-        Customer customer = new Customer(
-                Validator.validateCustomerNumber("Kundennummer: "),
-                Validator.validateSalutation("Anrede: ", null),
-                Validator.validateTitel("Titel: ", null),
-                Validator.validateName("Vorname: ", null),
-                Validator.validateLastName("Nachname: ", null),
-                Validator.validateBirthdate("Geburtstag: ", null),
-                Validator.validateStreet("Straße: ", null),
-                Validator.validateStreetNumber("Hausnr.:", placeholderAndCheck),
-                Validator.validatePostcode("PLZ: ", placeholderAndCheck),
-                Validator.validateTown("Stadt: ", null),
-                Validator.validatePhoneNumber("Telefon: ", null),
-                Validator.validateMobileNumber("Mobile: ", null),
-                Validator.validateFax("Fax: ", null),
-                Validator.validateEmail("E-Mail: ", null),
-                Validator.validateNewsletter("Newsletter: Ja/Nein", placeholderAndCheck));
+        int customerNumber, streetNumber, postcode;
+        String salutation, title, name, lastName, birthdate, street, town, phoneNumber, mobilephoneNumber, fax, email,
+                newsletter;
+        do {
+            customerNumber = EA.readInt("Kundennummer: ");
+        } while (Validator.validateCustomerNumber(customerNumber));
+        do {
+            salutation = EA.readString("Anrede: ");
+        } while (Validator.validateSalutation(salutation));
+        do {
+            title = EA.readString("Titel: ");
+        } while (Validator.validateTitle(title));
+        do {
+            name = EA.readString("Vorname: ");
+        } while (Validator.validateName(name));
+        do {
+            lastName = EA.readString("Nachname: ");
+        } while (Validator.validateLastName(lastName));
+        do {
+            birthdate = EA.readString("Geburtsdatum: ");
+        } while (Validator.validateBirthdate(birthdate));
+        do {
+            street = EA.readString("Straße: ");
+        } while (Validator.validateStreet(street));
+        do {
+            streetNumber = EA.readInt("Hausnr.: ");
+        } while (Validator.validateStreetNumber(streetNumber));
+        do {
+            postcode = EA.readInt("PLZ: ");
+        } while (Validator.validatePostcode(postcode));
+        do {
+            town = EA.readString("Stadt: ");
+        } while (Validator.validateTown(town));
+        do {
+            phoneNumber = EA.readString("Telefonnr.: ");
+        } while (Validator.validatePhoneNumber(phoneNumber));
+        do {
+            mobilephoneNumber = EA.readString("Handynr.: ");
+        } while (Validator.validateMobileNumber(mobilephoneNumber));
+        do {
+            fax = EA.readString("Fax: ");
+        } while (Validator.validateFax(fax));
+        do {
+            email = EA.readString("Email: ");
+        } while (Validator.validateEmail(email));
+        do {
+            newsletter = EA.readString("Newsletter: j/n ");
+        } while (Validator.validateNewsletter(newsletter));
+
+        Customer customer = new Customer(customerNumber, salutation, title, name, lastName, birthdate, street,
+                streetNumber, postcode, town, phoneNumber, mobilephoneNumber, fax, email,
+                newsletter.equals("Ja") ? 1 : 0);
 
         List<Customer> customerList = new ArrayList<Customer>();
         customerList.add(customer);
         OutputCustomerService.showUsers(null, customerList);
 
-        String isInputOkay = IO.readString("Ist ihre Eingabe so richtig? j/n ");
+        String isInputOkay = EA.readString("Ist ihre Eingabe so richtig? j/n ");
         if (isInputOkay.equals("j")) {
             boolean isSuccess = CustomerService.insertCustomer(customer);
             if (isSuccess) {
@@ -118,14 +149,16 @@ public class CustomerController {
         } else {
             System.out.print("Abbruch\n");
         }
-        return;
     }
 
     static void updateUser() {
+        int customerNumber, streetNumber, postcode;
+        String salutation, title, name, lastName, birthdate, street, town, phoneNumber, mobilephoneNumber, fax,
+                email, newsletter;
         System.out.println("Kunden updaten:\n");
-        int customerNumber = IO.readInt("Kundennummer des zuupdatenden Kunden: ");
-        System.out.println("");
-
+        do {
+            customerNumber = EA.readInt("Kundennummer des zuupdatenden Kunden: ");
+        } while (Validator.validateCustomerNumber(customerNumber));
         String query = String.format("SELECT * FROM pilot_customers.customers WHERE customer_number = %d;",
                 customerNumber);
 
@@ -134,39 +167,59 @@ public class CustomerController {
         for (Customer customer : customers) {
             System.out.println("\n---Für keine Veränderung Enter drücken---\n");
 
-            Customer updatedCustomer = new Customer(
-                    Validator.validateCustomerNumber("Kundennummer: "),
-                    Validator.validateSalutation(String.format("Anrede: Stand(%s)", customer.getSalutation()),
-                            customer.getSalutation()),
-                    Validator.validateTitel(String.format("Titel: Stand(%s)", customer.getTitel()),
-                            customer.getTitel()),
-                    Validator.validateName(String.format("Vorname: Stand(%s)", customer.getName()), customer.getName()),
-                    Validator.validateLastName(String.format("Nachname: Stand(%s)", customer.getLastName()),
-                            customer.getLastName()),
-                    Validator.validateBirthdate(String.format("Geburtstag: Stand(%s)", customer.getBirthdate()),
-                            customer.getBirthdate()),
-                    Validator.validateStreet(String.format("Straße: Stand(%s)", customer.getStreet()),
-                            customer.getStreet()),
-                    Validator.validateStreetNumber(String.format("Hausnr.: Stand(%s)", customer.getStreetNumber()),
-                            customer.getStreetNumber()),
-                    Validator.validatePostcode(String.format("PLZ: Stand(%s)", customer.getPostcode()),
-                            customer.getPostcode()),
-                    Validator.validateTown(String.format("Stadt: Stand(%s)", customer.getTown()), customer.getTown()),
-                    Validator.validatePhoneNumber(String.format("Telefon: Stand(%s)", customer.getPhoneNumber()),
-                            customer.getPhoneNumber()),
-                    Validator.validateMobileNumber(String.format("Mobile: Stand(%s)", customer.getMobileNumber()),
-                            customer.getMobileNumber()),
-                    Validator.validateFax(String.format("Fax: Stand(%s)", customer.getFax()), customer.getFax()),
-                    Validator.validateEmail(String.format("E-Mail: Stand(%s)", customer.getEmail()),
-                            customer.getEmail()),
-                    Validator.validateNewsletter(String.format("Newsletter: Ja/Nein Stand(%s)",
-                            customer.getNewsletter() == 1 ? "Ja" : "Nein"), customer.getNewsletter()));
+            do {
+                salutation = EA.readString(String.format("Anrede: Stand(%s)", customer.getSalutation()));
+            } while (Validator.validateSalutation(salutation));
+            do {
+                title = EA.readString(String.format("Titel: Stand(%s)", customer.getTitle()));
+            } while (Validator.validateTitle(title));
+            do {
+                name = EA.readString(String.format("Vorname: Stand(%s)", customer.getName()));
+            } while (Validator.validateName(name));
+            do {
+                lastName = EA.readString(String.format("Nachname: Stand(%s)", customer.getLastName()));
+            } while (Validator.validateLastName(lastName));
+            do {
+                birthdate = EA.readString(String.format("Geburtsdatum: Stand(%s)", customer.getBirthdate()));
+            } while (Validator.validateBirthdate(birthdate));
+            do {
+                street = EA.readString(String.format("Straße: Stand(%s)", customer.getStreet()));
+            } while (Validator.validateStreet(street));
+            do {
+                streetNumber = EA.readInt(String.format("Hausnr.: Stand(%s)", customer.getStreetNumber()));
+            } while (Validator.validateStreetNumber(streetNumber));
+            do {
+                postcode = EA.readInt(String.format("PLZ: Stand(%s)", customer.getPostcode()));
+            } while (Validator.validatePostcode(postcode));
+            do {
+                town = EA.readString(String.format("Stadt: Stand(%s)", customer.getTown()));
+            } while (Validator.validateTown(town));
+            do {
+                phoneNumber = EA.readString(String.format("Telefon: Stand(%s)", customer.getPhoneNumber()));
+            } while (Validator.validatePhoneNumber(phoneNumber));
+            do {
+                mobilephoneNumber = EA.readString(String.format("Mobile: Stand(%s)", customer.getMobileNumber()));
+            } while (Validator.validateMobileNumber(mobilephoneNumber));
+            do {
+                fax = EA.readString(String.format("Fax: Stand(%s)", customer.getFax()));
+            } while (Validator.validateFax(fax));
+            do {
+                email = EA.readString(String.format("Email: Stand(%s)", customer.getEmail()));
+            } while (Validator.validateEmail(email));
+            do {
+                newsletter = EA.readString(
+                        String.format("Newsletter: Ja/Nein Stand(%s)", customer.getNewsletter() == 1 ? "Ja" : "Nein"));
+            } while (Validator.validateNewsletter(newsletter));
+
+            Customer updatedCustomer = new Customer(customerNumber, salutation, title, name, lastName, birthdate,
+                    street, streetNumber, postcode, town, phoneNumber, mobilephoneNumber, fax, email,
+                    newsletter.equals("Ja") ? 1 : 0);
 
             List<Customer> customerList = new ArrayList<Customer>();
             customerList.add(updatedCustomer);
             OutputCustomerService.showUsers(null, customerList);
 
-            String isInputOkay = IO.readString("Ist ihre Eingabe so richtig? j/n ");
+            String isInputOkay = EA.readString("Ist ihre Eingabe so richtig? j/n ");
             System.out.println("");
 
             if (isInputOkay.equals("j")) {
@@ -180,20 +233,18 @@ public class CustomerController {
                 System.out.print("Abbruch\n");
             }
         }
-
-        return;
     }
 
     static void deleteUser() {
         System.out.println("Kunden löschen:\n");
         System.out.println("");
 
-        int customerNumber = IO.readInt("Kundennummer des zulöschenden Kunden: ");
+        int customerNumber = EA.readInt("Kundennummer des zulöschenden Kunden: ");
         String showQuery = String.format("SELECT * FROM pilot_customers.customers WHERE customer_number = %d;",
                 customerNumber);
         OutputCustomerService.showUsers(showQuery);
 
-        String isInputOkay = IO.readString("Ist ihre Eingabe so richtig? j/n ");
+        String isInputOkay = EA.readString("Ist ihre Eingabe so richtig? j/n ");
         System.out.println("");
 
         if (isInputOkay.equals("j")) {
@@ -206,20 +257,17 @@ public class CustomerController {
         } else {
             System.out.print("Abbruch\n");
         }
-        return;
     }
 
     static void searchUser() {
-        String customerNumber = IO.readString("Suchbegriff: ");
+        String customerNumber = EA.readString("Suchbegriff: ");
         String query = "SELECT * FROM pilot_customers.customers WHERE customer_number = " + customerNumber + ";";
         System.out.println("Suchergebnisse: \n");
         System.out.println(query);
         OutputCustomerService.showUsers(query);
-        return;
     }
 
     static void waitForEnter() {
-        IO.readString("\nDrücke Enter ...");
-        return;
+        EA.readString("\nDrücke Enter ...");
     }
 }
