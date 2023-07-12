@@ -53,7 +53,7 @@ public class Validator {
 
     public static boolean validateStreet(String street) {
         street = street.trim();
-        String regex = "^[A-ZÄÜÖ][a-zöüäA-ZÜÖÄ\s-.]+$";
+        String regex = "^[A-ZÄÜÖ][a-zöüäA-ZÜÖÄ\\s-.]+$";
         boolean isValid = isMatch(street, regex);
         return isValid;
     }
@@ -72,7 +72,7 @@ public class Validator {
 
     public static boolean validateTown(String town) {
         town = town.trim();
-        String regex = "^[A-ZÄÜÖ][a-zöüäA-ZÜÖÄ\sß]+$";
+        String regex = "^[A-ZÄÜÖ][a-zöüäA-ZÜÖÄ\\sß]+$";
         boolean isValid = isMatch(town, regex);
         return isValid;
     }
