@@ -5,6 +5,7 @@ import util.EA;
 
 public class CustomerController {
     public static void main(String[] args) throws Exception {
+        Access.readFile();
 
         String[] choices = { "1. Neukunden einpflegen", "2. Kundendaten verändern", "3. Kunden löschen",
                 "4. Kunden suchen",

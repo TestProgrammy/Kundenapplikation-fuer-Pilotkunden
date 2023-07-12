@@ -2,21 +2,19 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 public class Access {
-    public static String user = "Testuser";// readFile(0);
-    public static String password = "Test123456*";// readFile(1);
+    private static String file = "C:/Users/XEDUSOLD/Kundenapplikation-fuer-Pilotkunden/project/app/src/main/java/de.ewe.tk.customer/access.csv";
+    public static String user;
+    public static String password;
 
-    public static String readFile(int num) throws Exception {
-        String file = "access.csv";
-        String value;
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        final String user = reader.readLine();
-        final String password = reader.readLine();
-        reader.close();
-        if (num == 0) {
-            value = user;
-        } else {
-            value = password;
+    public static void readFile() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            user = reader.readLine();
+            password = reader.readLine();
+            reader.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
-        return value;
     }
 }
