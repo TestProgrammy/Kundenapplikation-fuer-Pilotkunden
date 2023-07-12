@@ -4,14 +4,14 @@ import java.util.regex.Pattern;
 public class Validator {
 
     private static boolean isMatch(String value, String regex) {
-        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(value);
         boolean isMatch = matcher.find();
         return isMatch;
     }
 
     public static boolean validateCustomerNumber(int customerNumber) {
-        String regex = "^[0-9]+$";
+        String regex = "^[0-9]*[1-9]$";
         boolean isValid = isMatch(String.format("%d", customerNumber), regex);
         return isValid;
     }
@@ -32,28 +32,28 @@ public class Validator {
 
     public static boolean validateName(String name) {
         name = name.trim();
-        String regex = "^[A-ZÄÜÖ][a-zöüä]*$";
+        String regex = "^[A-ZÄÜÖ][a-zöüäA-Z-]*$";
         boolean isValid = isMatch(name, regex);
         return isValid;
     }
 
     public static boolean validateLastName(String lastName) {
         lastName = lastName.trim();
-        String regex = "^[A-ZÄÜÖ][a-zöüä]*$";
+        String regex = "^[A-ZÄÜÖ][a-zöüäA-Z-]*$";
         boolean isValid = isMatch(lastName, regex);
         return isValid;
     }
 
     public static boolean validateBirthdate(String birthdate) {
         birthdate = birthdate.trim();
-        String regex = "^[1-2][0-9]{3}-(0\\d|1[0-2])-([0-2]\\d|3[0-1])$";
+        String regex = "^[1-2][0-9]{2}-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\\d|3[0-1])$";
         boolean isValid = isMatch(birthdate, regex);
         return isValid;
     }
 
     public static boolean validateStreet(String street) {
         street = street.trim();
-        String regex = "^[A-ZÄÜÖ][a-zöüäA-ZÜÖÄ\\s-.]+$";
+        String regex = "^[A-ZÄÜÖ][a-zöüäA-ZÜÖÄ\\s.ß-]+$";
         boolean isValid = isMatch(street, regex);
         return isValid;
     }
@@ -79,7 +79,7 @@ public class Validator {
 
     public static boolean validatePhoneNumber(String num) {
         num = num.trim();
-        String regex = "^0\\d{3,4}/\\d{7,8}$";
+        String regex = "^0\\d{2,4}/\\d{7,8}$";
         boolean isValid = isMatch(num, regex);
         return isValid;
     }

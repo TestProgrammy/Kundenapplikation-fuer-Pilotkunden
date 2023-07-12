@@ -159,7 +159,7 @@ public class CustomerCreator {
             newsletter = EA.readString(
                     String.format("Newsletter: Ja/Nein Stand(%s)", customer.getNewsletter() == 1 ? "Ja" : "Nein"));
             if (newsletter.equals("")) {
-                name = customer.getNewsletter() == 1 ? "Ja" : "Nein";
+                newsletter = customer.getNewsletter() == 1 ? "Ja" : "Nein";
                 break;
             }
         } while (!Validator.validateNewsletter(newsletter));

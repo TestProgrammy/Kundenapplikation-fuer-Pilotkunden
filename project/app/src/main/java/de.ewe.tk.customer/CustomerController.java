@@ -112,39 +112,31 @@ public class CustomerController {
 
         List<Customer> customers = CustomerService.getCustomer(query);
 
-        switch (customers.size()) {
-            case 0 -> {
-                System.out.println("Die Kundennummer ist nicht vorhanden.");
-                System.out.print("Abbruch\n");
-            }
-            default -> {
-                System.out.println("Kundennummer ist mehrfach vorhanden.");
-                System.out.print("Abbruch\n");
-            }
-            case 1 -> {
-                customer = customers.get(0);
-                Customer updatedCustomer = CustomerCreator.changeUser(customer);
-
-                List<Customer> customerList = new ArrayList<Customer>();
-                customerList.add(updatedCustomer);
-                OutputCustomerService.showUsers(null, customerList);
-
-                String isInputOkay = EA.readString("Ist ihre Eingabe so richtig? j/n ");
-                System.out.println("");
-
-                if (isInputOkay.equals("j")) {
-                    boolean isSuccess = CustomerService.updateCustomer(updatedCustomer);
-                    if (isSuccess) {
-                        System.out.println("Der Kunde wurde erfolgreich verändert!\n");
-                    } else {
-                        System.out.println("Der Kunde konnte nicht verändert werden!\n");
-                    }
-                } else {
-                    System.out.print("Abbruch\n");
-                }
-            }
+        if (customers.size() != 1) {
+            System.out.println("Fehlgeschlagen! Die Kundennummer ist nicht vorhanden.");
+            System.out.print("Abbruch\n");
+            return;
         }
+        customer = customers.get(0);
+        Customer updatedCustomer = CustomerCreator.changeUser(customer);
 
+        List<Customer> customerList = new ArrayList<Customer>();
+        customerList.add(updatedCustomer);
+        OutputCustomerService.showUsers(null, customerList);
+
+        String isInputOkay = EA.readString("Ist ihre Eingabe so richtig? j/n ");
+        System.out.println("");
+
+        if (isInputOkay.equals("j")) {
+            boolean isSuccess = CustomerService.updateCustomer(updatedCustomer);
+            if (isSuccess) {
+                System.out.println("Der Kunde wurde erfolgreich verändert!\n");
+            } else {
+                System.out.println("Der Kunde konnte nicht verändert werden!\n");
+            }
+        } else {
+            System.out.print("Abbruch\n");
+        }
     }
 
     static void deleteUser() {
