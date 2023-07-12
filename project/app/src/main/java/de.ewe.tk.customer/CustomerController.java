@@ -6,7 +6,6 @@ import util.EA;
 public class CustomerController {
     public static void main(String[] args) throws Exception {
 
-        System.out.printf("user: %s password: %s", Access.user, Access.password);
         String[] choices = { "1. Neukunden einpflegen", "2. Kundendaten verändern", "3. Kunden löschen",
                 "4. Kunden suchen",
                 "5. Alle Kunden anzeigen", "6. Beenden" };
@@ -23,6 +22,7 @@ public class CustomerController {
                     do {
                         addUser();
                         isNotBreak = EA.readString("Wollen Sie einen weiteren Kunden anlegen? j/n ");
+                        System.out.println("");
                         if (!isNotBreak.equals("j")) {
                             break;
                         }
@@ -32,6 +32,7 @@ public class CustomerController {
                     do {
                         updateUser();
                         isNotBreak = EA.readString("Wollen Sie einen weiteren Kunden verändern? j/n ");
+                        System.out.println("");
                         if (!isNotBreak.equals("j")) {
                             break;
                         }
@@ -41,6 +42,7 @@ public class CustomerController {
                     do {
                         deleteUser();
                         isNotBreak = EA.readString("Wollen Sie einen weiteren Kunden löschen? j/n ");
+                        System.out.println("");
                         if (!isNotBreak.equals("j")) {
                             break;
                         }
@@ -50,6 +52,7 @@ public class CustomerController {
                     do {
                         searchUser();
                         isNotBreak = EA.readString("Wollen Sie nach einen weiteren Kunden suchen? j/n ");
+                        System.out.println("");
                         if (!isNotBreak.equals("j")) {
                             break;
                         }
@@ -59,6 +62,7 @@ public class CustomerController {
                     OutputCustomerService.showAllUsers();
                 }
                 case 6 -> {
+                    CustomerService.closeConnection();
                     System.exit(0);
                 }
             }
@@ -85,7 +89,7 @@ public class CustomerController {
 
         List<Customer> customerList = new ArrayList<Customer>();
         customerList.add(customer);
-        OutputCustomerService.showUsers(null, customerList);
+        OutputCustomerService.showUsers(0, customerList);
 
         String isInputOkay = EA.readString("Ist ihre Eingabe so richtig? j/n ");
         if (isInputOkay.equals("j")) {
@@ -107,10 +111,8 @@ public class CustomerController {
         do {
             customerNumber = EA.readInt("Kundennummer des zuupdatenden Kunden: ");
         } while (!Validator.validateCustomerNumber(customerNumber));
-        String query = String.format("SELECT * FROM pilot_customers.customers WHERE customer_number = %d;",
-                customerNumber);
 
-        List<Customer> customers = CustomerService.getCustomer(query);
+        List<Customer> customers = CustomerService.getCustomer(customerNumber);
 
         if (customers.size() != 1) {
             System.out.println("Fehlgeschlagen! Die Kundennummer ist nicht vorhanden.");
@@ -122,7 +124,7 @@ public class CustomerController {
 
         List<Customer> customerList = new ArrayList<Customer>();
         customerList.add(updatedCustomer);
-        OutputCustomerService.showUsers(null, customerList);
+        OutputCustomerService.showUsers(0, customerList);
 
         String isInputOkay = EA.readString("Ist ihre Eingabe so richtig? j/n ");
         System.out.println("");
@@ -141,12 +143,15 @@ public class CustomerController {
 
     static void deleteUser() {
         System.out.println("Kunden löschen:\n");
-        System.out.println("");
 
-        int customerNumber = EA.readInt("Kundennummer des zulöschenden Kunden: ");
-        String showQuery = String.format("SELECT * FROM pilot_customers.customers WHERE customer_number = %d;",
-                customerNumber);
-        OutputCustomerService.showUsers(showQuery);
+        int customerNumber;
+        do {
+            customerNumber = EA.readInt("Kundennummer des zulöschenden Kunden: ");
+        } while (!Validator.validateCustomerNumber(customerNumber));
+
+        if (!OutputCustomerService.showUsers(customerNumber)) {
+            return;
+        }
 
         String isInputOkay = EA.readString("Ist ihre Eingabe so richtig? j/n ");
         System.out.println("");
@@ -156,7 +161,7 @@ public class CustomerController {
             if (isSuccess) {
                 System.out.println("Der Kunde wurde erfolgreich gelöscht!\n");
             } else {
-                System.out.println("Der Kunde nicht gelöscht werden!\n");
+                System.out.println("Der Kunde konnte nicht gelöscht werden!\n");
             }
         } else {
             System.out.print("Abbruch\n");
@@ -164,10 +169,12 @@ public class CustomerController {
     }
 
     static void searchUser() {
-        String customerNumber = EA.readString("Suchbegriff: ");
-        String query = "SELECT * FROM pilot_customers.customers WHERE customer_number = " + customerNumber + ";";
+        int customerNumber;
+        do {
+            customerNumber = EA.readInt("Gesuchte Kundennummer: ");
+        } while (!Validator.validateCustomerNumber(customerNumber));
         System.out.println("Suchergebnisse: \n");
-        OutputCustomerService.showUsers(query);
+        OutputCustomerService.showUsers(customerNumber);
     }
 
     static void waitForEnter() {

@@ -11,21 +11,21 @@ public class Validator {
     }
 
     public static boolean validateCustomerNumber(int customerNumber) {
-        String regex = "^[0-9]*[1-9]$";
+        String regex = "^[1-9][0-9]+$|^[1-9]$";
         boolean isValid = isMatch(String.format("%d", customerNumber), regex);
         return isValid;
     }
 
     public static boolean validateSalutation(String salutation) {
         salutation = salutation.trim();
-        String regex = "^Frau|Herr$";
+        String regex = "^(Frau|Herr)$";
         boolean isValid = isMatch(salutation, regex);
         return isValid;
     }
 
     public static boolean validateTitle(String title) {
         title = title.trim();
-        String regex = "^Dr.|Prof.|$";
+        String regex = "^(Dr[.]|Prof[.])$";
         boolean isValid = isMatch(title, regex);
         return isValid;
     }
@@ -46,21 +46,21 @@ public class Validator {
 
     public static boolean validateBirthdate(String birthdate) {
         birthdate = birthdate.trim();
-        String regex = "^[1-2][0-9]{2}-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\\d|3[0-1])$";
+        String regex = "^[1-2][0-9]{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$";
         boolean isValid = isMatch(birthdate, regex);
         return isValid;
     }
 
     public static boolean validateStreet(String street) {
         street = street.trim();
-        String regex = "^[A-ZÄÜÖ][a-zöüäA-ZÜÖÄ\\s.ß-]+$";
+        String regex = "^[A-ZÄÜÖ][a-zöüäA-ZÜÖÄ .ß-]+$";
         boolean isValid = isMatch(street, regex);
         return isValid;
     }
 
     public static boolean validateStreetNumber(int streetNumber) {
-        String regex = "^\\d+$";
-        boolean isValid = isMatch(String.format("/d", streetNumber), regex);
+        String regex = "^[1-9][0-9]+$|^[1-9]$";
+        boolean isValid = isMatch(String.format("%d", streetNumber), regex);
         return isValid;
     }
 
@@ -72,28 +72,28 @@ public class Validator {
 
     public static boolean validateTown(String town) {
         town = town.trim();
-        String regex = "^[A-ZÄÜÖ][a-zöüäA-ZÜÖÄ\\sß]+$";
+        String regex = "^[A-ZÄÜÖ][a-zöüäA-ZÜÖÄ ß]+$";
         boolean isValid = isMatch(town, regex);
         return isValid;
     }
 
     public static boolean validatePhoneNumber(String num) {
         num = num.trim();
-        String regex = "^0\\d{2,4}/\\d{7,8}$";
+        String regex = "^0[0-9]{2,4}/[0-9]{7,8}$";
         boolean isValid = isMatch(num, regex);
         return isValid;
     }
 
     public static boolean validateMobileNumber(String num) {
         num = num.trim();
-        String regex = "^01\\d{2}/\\d{7}$";
+        String regex = "^01[0-9]{2}/[0-9]{7}$";
         boolean isValid = isMatch(num, regex);
         return isValid;
     }
 
     public static boolean validateFax(String num) {
         num = num.trim();
-        String regex = "^0\\d{2,4}/\\d{6,8}$";
+        String regex = "^0[0-9]{2,4}/[0-9]{6,8}$";
         boolean isValid = isMatch(num, regex);
         return isValid;
     }
@@ -107,7 +107,7 @@ public class Validator {
 
     public static boolean validateNewsletter(String newsletter) {
         newsletter = newsletter.trim();
-        String regex = "^Ja|Nein$";
+        String regex = "^Ja$|^Nein$";
         boolean isValid = isMatch(newsletter, regex);
         return isValid;
     }

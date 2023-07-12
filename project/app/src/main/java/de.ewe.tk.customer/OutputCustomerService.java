@@ -3,18 +3,24 @@ import java.util.List;
 public class OutputCustomerService {
 
     static void showAllUsers() {
-        String query = "SELECT * FROM pilot_customers.customers;";
         System.out.println("Alle Kunden:\n");
-        showUsers(query);
+        showUsers(0);
     }
 
-    static void showUsers(String query) {
-        showUsers(query, null);
+    static boolean showUsers(int customerNumber) {
+        return showUsers(customerNumber, null);
     }
 
-    static void showUsers(String query, List<Customer> CustomerList) {
+    static boolean showUsers(int customerNumber, List<Customer> CustomerList) {
         if (CustomerList == null) {
-            CustomerList = CustomerService.getCustomer(query);
+            CustomerList = CustomerService.getCustomer(customerNumber);
+        }
+
+        if (CustomerList.size() == 0) {
+            System.out.printf(
+                    "Die Kundennummer %d ist nicht vorhanden.\n",
+                    customerNumber);
+            return false;
         }
 
         System.out.printf(
@@ -39,5 +45,6 @@ public class OutputCustomerService {
                     customer.getFax(), customer.getEmail(),
                     customer.getNewsletter() == 1 ? "Ja" : "Nein");
         }
+        return true;
     }
 }

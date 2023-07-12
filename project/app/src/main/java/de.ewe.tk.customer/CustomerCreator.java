@@ -2,17 +2,18 @@ import util.EA;
 
 public class CustomerCreator {
     public static Customer createUser() {
-        int customerNumber, streetNumber, postcode;
+        int streetNumber, postcode;
         String salutation, title, name, lastName, birthdate, street, town, phoneNumber, mobilephoneNumber, fax, email,
                 newsletter;
-        do {
-            customerNumber = EA.readInt("Kundennummer: ");
-        } while (!(Validator.validateCustomerNumber(customerNumber)));
+
         do {
             salutation = EA.readString("Anrede: ");
         } while (!Validator.validateSalutation(salutation));
         do {
             title = EA.readString("Titel: ");
+            if (title.equals("")) {
+                break;
+            }
         } while (!Validator.validateTitle(title));
         do {
             name = EA.readString("Vorname: ");
@@ -48,10 +49,10 @@ public class CustomerCreator {
             email = EA.readString("Email: ");
         } while (!Validator.validateEmail(email));
         do {
-            newsletter = EA.readString("Newsletter: j/n ");
+            newsletter = EA.readString("Newsletter: Ja/Nein ");
         } while (!Validator.validateNewsletter(newsletter));
 
-        Customer customer = new Customer(customerNumber, salutation, title, name, lastName, birthdate, street,
+        Customer customer = new Customer(null, salutation, title, name, lastName, birthdate, street,
                 streetNumber, postcode, town, phoneNumber, mobilephoneNumber, fax, email,
                 newsletter.equals("Ja") ? 1 : 0);
         return customer;
@@ -65,91 +66,97 @@ public class CustomerCreator {
         System.out.println("\n---Für keine Veränderung Enter drücken---\n");
 
         do {
-            salutation = EA.readString(String.format("Anrede: Stand(%s)", customer.getSalutation()));
+            salutation = EA.readString(String.format("Anrede: Stand(%s) ", customer.getSalutation()));
             if (salutation.equals("")) {
                 salutation = customer.getSalutation();
                 break;
             }
         } while (!Validator.validateSalutation(salutation));
         do {
-            title = EA.readString(String.format("Titel: Stand(%s)", customer.getTitle()));
+            title = EA.readString(String.format("Titel: Stand(%s) ", customer.getTitle()));
             if (title.equals("")) {
-                title = customer.getTitle();
+                if (!title.equals(customer.getTitle())) {
+                    boolean isChangeTitle = EA.readString("Soll der Title verändert werden? j/n ").equals("j") ? true
+                            : false;
+                    if (!isChangeTitle) {
+                        title = customer.getTitle();
+                    }
+                }
                 break;
             }
         } while (!Validator.validateTitle(title));
         do {
-            name = EA.readString(String.format("Vorname: Stand(%s)", customer.getName()));
+            name = EA.readString(String.format("Vorname: Stand(%s) ", customer.getName()));
             if (name.equals("")) {
                 name = customer.getName();
                 break;
             }
         } while (!Validator.validateName(name));
         do {
-            lastName = EA.readString(String.format("Nachname: Stand(%s)", customer.getLastName()));
+            lastName = EA.readString(String.format("Nachname: Stand(%s) ", customer.getLastName()));
             if (lastName.equals("")) {
                 lastName = customer.getLastName();
                 break;
             }
         } while (!Validator.validateLastName(lastName));
         do {
-            birthdate = EA.readString(String.format("Geburtsdatum: Stand(%s)", customer.getBirthdate()));
+            birthdate = EA.readString(String.format("Geburtsdatum: Stand(%s) ", customer.getBirthdate()));
             if (birthdate.equals("")) {
                 birthdate = customer.getBirthdate();
                 break;
             }
         } while (!Validator.validateBirthdate(birthdate));
         do {
-            street = EA.readString(String.format("Straße: Stand(%s)", customer.getStreet()));
+            street = EA.readString(String.format("Straße: Stand(%s) ", customer.getStreet()));
             if (street.equals("")) {
                 street = customer.getStreet();
                 break;
             }
         } while (!Validator.validateStreet(street));
         do {
-            streetNumber = EA.readIntAllowEmpty(String.format("Hausnr.: Stand(%s)", customer.getStreetNumber()));
+            streetNumber = EA.readIntAllowEmpty(String.format("Hausnr.: Stand(%s) ", customer.getStreetNumber()));
             if (streetNumber == Integer.MIN_VALUE) {
                 streetNumber = customer.getStreetNumber();
                 break;
             }
         } while (!Validator.validateStreetNumber(streetNumber));
         do {
-            postcode = EA.readIntAllowEmpty(String.format("PLZ: Stand(%s)", customer.getPostcode()));
+            postcode = EA.readIntAllowEmpty(String.format("PLZ: Stand(%s) ", customer.getPostcode()));
             if (postcode == Integer.MIN_VALUE) {
                 postcode = customer.getPostcode();
                 break;
             }
         } while (!Validator.validatePostcode(postcode));
         do {
-            town = EA.readString(String.format("Stadt: Stand(%s)", customer.getTown()));
+            town = EA.readString(String.format("Stadt: Stand(%s) ", customer.getTown()));
             if (town.equals("")) {
                 town = customer.getTown();
                 break;
             }
         } while (!Validator.validateTown(town));
         do {
-            phoneNumber = EA.readString(String.format("Telefon: Stand(%s)", customer.getPhoneNumber()));
+            phoneNumber = EA.readString(String.format("Telefon: Stand(%s) ", customer.getPhoneNumber()));
             if (phoneNumber.equals("")) {
                 phoneNumber = customer.getPhoneNumber();
                 break;
             }
         } while (!Validator.validatePhoneNumber(phoneNumber));
         do {
-            mobilephoneNumber = EA.readString(String.format("Mobile: Stand(%s)", customer.getMobileNumber()));
+            mobilephoneNumber = EA.readString(String.format("Mobile: Stand(%s) ", customer.getMobileNumber()));
             if (mobilephoneNumber.equals("")) {
                 mobilephoneNumber = customer.getMobileNumber();
                 break;
             }
         } while (!Validator.validateMobileNumber(mobilephoneNumber));
         do {
-            fax = EA.readString(String.format("Fax: Stand(%s)", customer.getFax()));
+            fax = EA.readString(String.format("Fax: Stand(%s) ", customer.getFax()));
             if (fax.equals("")) {
                 fax = customer.getFax();
                 break;
             }
         } while (!Validator.validateFax(fax));
         do {
-            email = EA.readString(String.format("Email: Stand(%s)", customer.getEmail()));
+            email = EA.readString(String.format("Email: Stand(%s) ", customer.getEmail()));
             if (email.equals("")) {
                 email = customer.getEmail();
                 break;
@@ -157,7 +164,7 @@ public class CustomerCreator {
         } while (!Validator.validateEmail(email));
         do {
             newsletter = EA.readString(
-                    String.format("Newsletter: Ja/Nein Stand(%s)", customer.getNewsletter() == 1 ? "Ja" : "Nein"));
+                    String.format("Newsletter: Ja/Nein Stand(%s) ", customer.getNewsletter() == 1 ? "Ja" : "Nein"));
             if (newsletter.equals("")) {
                 newsletter = customer.getNewsletter() == 1 ? "Ja" : "Nein";
                 break;
