@@ -16,6 +16,21 @@ public class EA {
         }
     }
 
+    public static int readIntAllowEmpty(Object aufforderung) {
+        System.out.print(aufforderung);
+        String eingabe = "";
+        try {
+            BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+            eingabe = input.readLine();
+            return Integer.parseInt(eingabe);
+        } catch (Exception exc) {
+            if (eingabe.equals("")) {
+                return Integer.MIN_VALUE;
+            }
+            return readInt(aufforderung);
+        }
+    }
+
     public static String readString(Object aufforderung) {
         System.out.print(aufforderung);
         try {

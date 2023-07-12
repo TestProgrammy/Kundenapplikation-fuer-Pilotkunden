@@ -25,7 +25,7 @@ public class Validator {
 
     public static boolean validateTitle(String title) {
         title = title.trim();
-        String regex = "^Dr.|Prof.$";
+        String regex = "^Dr.|Prof.|$";
         boolean isValid = isMatch(title, regex);
         return isValid;
     }
