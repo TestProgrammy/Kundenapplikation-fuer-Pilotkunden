@@ -1,10 +1,14 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 
 public class Access {
-    private static String file = "C:/Users/XEDUSOLD/Kundenapplikation-fuer-Pilotkunden/project/app/src/main/java/de.ewe.tk.customer/access.csv";
-    public static String user;
-    public static String password;
+    private static String file = new File("").getAbsolutePath()
+            + "\\app\\src\\main\\java\\de.ewe.tk.customer\\access.csv";
+    private static String file2 = new File("").getAbsolutePath()
+            + "\\project\\app\\src\\main\\java\\de.ewe.tk.customer\\access.csv";
+    static String user;
+    static String password;
 
     public static boolean readFile() {
         try {
@@ -14,7 +18,15 @@ public class Access {
             reader.close();
             return true;
         } catch (Exception e) {
-            return false;
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(file2));
+                user = reader.readLine();
+                password = reader.readLine();
+                reader.close();
+                return true;
+            } catch (Exception e2) {
+                return false;
+            }
         }
     }
 }

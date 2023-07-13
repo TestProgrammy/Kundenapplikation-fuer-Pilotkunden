@@ -21,7 +21,7 @@ public class CustomerService {
                     password);
             return connection;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Es konnte keine Verbindung aufgebaut werden. " + e.getMessage());
             return null;
         }
     }
@@ -60,7 +60,7 @@ public class CustomerService {
         try {
             connection.close();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Die Verbindung konnte nicht geschlossen werden. " + e.getMessage());
         }
     }
 
@@ -79,13 +79,13 @@ public class CustomerService {
                 Customer customer = new Customer(rs.getInt(1), rs.getString(2),
                         rs.getString(3), rs.getString(4),
                         rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8),
-                        rs.getInt(9), rs.getString(10),
+                        rs.getString(9), rs.getString(10),
                         rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14),
                         rs.getInt(15));
                 customerList.add(customer);
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Fehlerhafte DB-Daten zurückbekommen. " + e.getMessage());
         }
         return customerList;
     }
@@ -104,7 +104,7 @@ public class CustomerService {
 
     public static boolean insertCustomer(Customer customer) {
         String query = String.format(
-                "INSERT into pilot_customers.customers (salutation, title, name, last_name, birth_date, street, street_number, postcode, town, phone_number, mobile_number, fax, e_mail, newsletter) values('%s', '%s', '%s', '%s', '%s', '%s', %d, %d, '%s', '%s', '%s', '%s', '%s', %d);",
+                "INSERT into pilot_customers.customers (salutation, title, name, last_name, birth_date, street, street_number, postcode, town, phone_number, mobile_number, fax, e_mail, newsletter) values('%s', '%s', '%s', '%s', '%s', '%s', %d, '%s', '%s', '%s', '%s', '%s', '%s', %d);",
                 customer.getSalutation(), customer.getTitle(),
                 customer.getName(), customer.getLastName(), customer.getBirthdate(), customer.getStreet(),
                 customer.getStreetNumber(),
@@ -124,7 +124,7 @@ public class CustomerService {
 
     public static boolean updateCustomer(Customer customer) {
         String query = String.format(
-                "Update pilot_customers.customers SET salutation = '%s', title = '%s', name = '%s', last_name = '%s', birth_date = '%s', street = '%s', street_number = %d, postcode = %d, town = '%s', phone_number = '%s', mobile_number = '%s', fax = '%s', e_mail = '%s', newsletter = %d WHERE customer_number = %d;",
+                "Update pilot_customers.customers SET salutation = '%s', title = '%s', name = '%s', last_name = '%s', birth_date = '%s', street = '%s', street_number = %d, postcode = '%s', town = '%s', phone_number = '%s', mobile_number = '%s', fax = '%s', e_mail = '%s', newsletter = %d WHERE customer_number = %d;",
                 customer.getSalutation(), customer.getTitle(),
                 customer.getName(), customer.getLastName(), customer.getBirthdate(), customer.getStreet(),
                 customer.getStreetNumber(),

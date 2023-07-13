@@ -7,7 +7,7 @@ public class Customer {
       private final String birthDate;
       private final String street;
       private final Integer streetNumber;
-      private final Integer postcode;
+      private final String postcode;
       private final String town;
       private final String phoneNumber;
       private final String mobileNumber;
@@ -16,7 +16,7 @@ public class Customer {
       private final Integer newsletter;
 
       public Customer(Integer customerNumber, String salutation, String title, String name, String lastName,
-                  String birthDate, String street, Integer streetNumber, Integer postcode, String town,
+                  String birthDate, String street, Integer streetNumber, String postcode, String town,
                   String phoneNumber, String mobileNumber, String fax, String eMail, Integer newsletter) {
 
             this.customerNumber = customerNumber;
@@ -68,7 +68,7 @@ public class Customer {
             return this.streetNumber;
       }
 
-      public Integer getPostcode() {
+      public String getPostcode() {
             return this.postcode;
       }
 

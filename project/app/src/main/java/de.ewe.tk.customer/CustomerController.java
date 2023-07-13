@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 
 import util.EA;
@@ -9,12 +8,6 @@ public class CustomerController {
             System.out.println("Es konnten die DB-Anmeldedaten nicht gelesen werden.");
             System.exit(1);
         }
-
-        String tets;
-        do {
-            tets = EA.readString("test straße: ");
-            System.out.println("str.: " + tets);
-        } while (!Validator.validateStreet(tets));
 
         String[] choices = { "1. Neukunden einpflegen", "2. Kundendaten verändern", "3. Kunden löschen",
                 "4. Kunden suchen",
@@ -96,10 +89,7 @@ public class CustomerController {
         System.out.println("Neuen Kunden eingeben:\n");
 
         Customer customer = CustomerCreator.createUser();
-
-        List<Customer> customerList = new ArrayList<Customer>();
-        customerList.add(customer);
-        OutputCustomerService.showUsers(0, customerList);
+        OutputCustomerService.showUser(customer);
 
         String isInputOkay = EA.readString("Ist ihre Eingabe so richtig? j/n ");
         if (isInputOkay.equals("j")) {
@@ -131,10 +121,7 @@ public class CustomerController {
         }
         customer = customers.get(0);
         Customer updatedCustomer = CustomerCreator.changeUser(customer);
-
-        List<Customer> customerList = new ArrayList<Customer>();
-        customerList.add(updatedCustomer);
-        OutputCustomerService.showUsers(0, customerList);
+        OutputCustomerService.showUser(updatedCustomer);
 
         String isInputOkay = EA.readString("Ist ihre Eingabe so richtig? j/n ");
         System.out.println("");
@@ -159,7 +146,7 @@ public class CustomerController {
             customerNumber = EA.readInt("Kundennummer des zulöschenden Kunden: ");
         } while (!Validator.validateCustomerNumber(customerNumber));
 
-        if (!OutputCustomerService.showUsers(customerNumber)) {
+        if (!OutputCustomerService.showSearchUser(customerNumber)) {
             return;
         }
 
@@ -184,7 +171,7 @@ public class CustomerController {
             customerNumber = EA.readInt("Gesuchte Kundennummer: ");
         } while (!Validator.validateCustomerNumber(customerNumber));
         System.out.println("Suchergebnisse: \n");
-        OutputCustomerService.showUsers(customerNumber);
+        OutputCustomerService.showSearchUser(customerNumber);
     }
 
     static void waitForEnter() {

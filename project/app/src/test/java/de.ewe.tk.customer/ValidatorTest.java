@@ -38,14 +38,15 @@ public class ValidatorTest {
     @Test
     public void testPostcodeValidation() {
         // Positive Fälle
-        int[] pIntValues = { 1234, Integer.parseInt("01912"), 12092 };
-        for (int value : pIntValues) {
+        String[] pIntValues = { "01234", "01912", "12092" };
+        for (String value : pIntValues) {
             assertTrue(Validator.validatePostcode(value));
         }
 
         // Negative Fälle
-        int[] nIntValues = { -1, 0, 1, 100, 20, -1000, Integer.parseInt("0192") };
-        for (int value : nIntValues) {
+        String[] nIntValues = { "", "?", "-", "j", "1", "ja", "nein", "Nmae", " ", " Na", "asdr", "[", "aS", "-1", "0",
+                "1", "100", "20", "-1000", "0192" };
+        for (String value : nIntValues) {
             assertFalse(Validator.validatePostcode(value));
         }
     }

@@ -2,8 +2,9 @@ import util.EA;
 
 public class CustomerCreator {
     public static Customer createUser() {
-        int streetNumber, postcode;
-        String salutation, title, name, lastName, birthdate, street, town, phoneNumber, mobilephoneNumber, fax, email,
+        int streetNumber;
+        String salutation, title, name, lastName, birthdate, street, postcode, town, phoneNumber, mobilephoneNumber,
+                fax, email,
                 newsletter;
 
         do {
@@ -31,7 +32,7 @@ public class CustomerCreator {
             streetNumber = EA.readInt("Hausnr.: ");
         } while (!Validator.validateStreetNumber(streetNumber));
         do {
-            postcode = EA.readInt("PLZ: ");
+            postcode = EA.readString("PLZ: ");
         } while (!Validator.validatePostcode(postcode));
         do {
             town = EA.readString("Stadt: ");
@@ -59,9 +60,9 @@ public class CustomerCreator {
     }
 
     public static Customer changeUser(Customer customer) {
-        int streetNumber, postcode;
-        String salutation, title, name, lastName, birthdate, street, town, phoneNumber, mobilephoneNumber, fax,
-                email, newsletter;
+        int streetNumber;
+        String salutation, title, name, lastName, birthdate, street, postcode, town, phoneNumber, mobilephoneNumber,
+                fax, email, newsletter;
 
         System.out.println("\n---Für keine Veränderung Enter drücken---\n");
 
@@ -114,15 +115,15 @@ public class CustomerCreator {
             }
         } while (!Validator.validateStreet(street));
         do {
-            streetNumber = EA.readIntAllowEmpty(String.format("Hausnr.: Stand(%s) ", customer.getStreetNumber()));
+            streetNumber = EA.readIntAllowEmpty(String.format("Hausnr.: Stand(%d) ", customer.getStreetNumber()));
             if (streetNumber == Integer.MIN_VALUE) {
                 streetNumber = customer.getStreetNumber();
                 break;
             }
         } while (!Validator.validateStreetNumber(streetNumber));
         do {
-            postcode = EA.readIntAllowEmpty(String.format("PLZ: Stand(%s) ", customer.getPostcode()));
-            if (postcode == Integer.MIN_VALUE) {
+            postcode = EA.readString(String.format("PLZ: Stand(%s) ", customer.getPostcode()));
+            if (postcode.equals("")) {
                 postcode = customer.getPostcode();
                 break;
             }
