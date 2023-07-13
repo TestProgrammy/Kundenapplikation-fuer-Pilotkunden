@@ -79,6 +79,8 @@ public class Validator {
     // [ .'!-]
     // ^[A-ZÀ-ÞŸŽŠŒ][a-zA-ZÀ-ÿŸžŽšŠŒœ .'!-]*$
 
+    // Č/č
+
     public static boolean validateTown(String town) {
         town = town.trim();
         String regex = "^[A-ZÀ-ÞŸŽŠŒ][a-zA-ZÀ-ÿŸžŽšŠŒœ .'!-]*$|^[A-ZÀ-ÞŸŽŠŒ]$";
