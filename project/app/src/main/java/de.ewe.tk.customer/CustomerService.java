@@ -26,7 +26,7 @@ public class CustomerService {
         }
     }
 
-    private static Statement getStatement(Connection connection) {
+    private static Statement createStatement(Connection connection) {
         try {
             Statement statement = connection.createStatement();
             return statement;
@@ -36,7 +36,7 @@ public class CustomerService {
         }
     }
 
-    private static ResultSet getResultSet(String query, Statement statement) {
+    private static ResultSet getResponse(String query, Statement statement) {
         try {
             ResultSet resultSet = statement.executeQuery(query);
             return resultSet;
@@ -46,7 +46,7 @@ public class CustomerService {
         }
     }
 
-    private static int getResultInt(String query, Statement statement) {
+    private static int getResponseInt(String query, Statement statement) {
         try {
             int result = statement.executeUpdate(query);
             return result;
@@ -66,14 +66,17 @@ public class CustomerService {
 
     public static List<Customer> getCustomer(int customerNumber) {
         String query;
+
         if (customerNumber == 0) {
             query = "SELECT * FROM pilot_customers.customers;";
         } else {
             query = String.format("SELECT * FROM pilot_customers.customers WHERE customer_number = %d;",
                     customerNumber);
         }
-        List<Customer> customerList = new ArrayList<Customer>();
-        ResultSet rs = getResultSet(query, getStatement(connection));
+
+        List<Customer> customers = new ArrayList<>();
+        ResultSet rs = getResponse(query, createStatement(connection));
+
         try {
             while (rs.next()) {
                 Customer customer = new Customer(rs.getInt(1), rs.getString(2),
@@ -82,21 +85,21 @@ public class CustomerService {
                         rs.getString(9), rs.getString(10),
                         rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14),
                         rs.getInt(15));
-                customerList.add(customer);
+                customers.add(customer);
             }
         } catch (Exception e) {
-            System.out.println("Fehlerhafte DB-Daten zurückbekommen. " + e.getMessage());
+            System.out.println("Es ist ein technischer Fehler aufgetreten: " + e.getMessage());
         }
-        return customerList;
+        return customers;
     }
 
     public static boolean deleteCustomer(Integer customerNumber) {
         String query = String.format("DELETE FROM customers WHERE customer_number = %d;",
                 customerNumber);
-        int rs = getResultInt(query, getStatement(connection));
+        int rs = getResponseInt(query, createStatement(connection));
 
         if (rs == 0) {
-            System.out.printf("Kundennummer %d gibt es nicht.", customerNumber);
+            System.out.printf("Die Kundennummer %d ist nicht vorhanden.", customerNumber);
             return false;
         }
         return true;
@@ -113,7 +116,7 @@ public class CustomerService {
                 customer.getFax(), customer.getEmail(),
                 customer.getNewsletter());
 
-        int rs = getResultInt(query, getStatement(connection));
+        int rs = getResponseInt(query, createStatement(connection));
 
         if (rs == 0) {
             System.out.println("Das Anlegen des Kunden hat nicht funktioniert.");
@@ -133,7 +136,7 @@ public class CustomerService {
                 customer.getFax(), customer.getEmail(),
                 customer.getNewsletter(), customer.getCustomerNumber());
 
-        int rs = getResultInt(query, getStatement(connection));
+        int rs = getResponseInt(query, createStatement(connection));
 
         if (rs == 0) {
             System.out.println("Das Verändern des Kunden hat nicht funktioniert.");

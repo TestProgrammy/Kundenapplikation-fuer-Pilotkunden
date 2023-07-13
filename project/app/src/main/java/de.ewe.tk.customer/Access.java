@@ -7,6 +7,7 @@ public class Access {
             + "\\app\\src\\main\\java\\de.ewe.tk.customer\\access.csv";
     private static String file2 = new File("").getAbsolutePath()
             + "\\project\\app\\src\\main\\java\\de.ewe.tk.customer\\access.csv";
+    private static String file3 = getPath();
     static String user;
     static String password;
 
@@ -28,5 +29,9 @@ public class Access {
                 return false;
             }
         }
+    }
+
+    private static String getPath() {
+        return "";
     }
 }

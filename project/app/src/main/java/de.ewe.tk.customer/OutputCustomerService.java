@@ -4,31 +4,31 @@ import java.util.List;
 public class OutputCustomerService {
 
     static void showAllUsers() {
-        List<Customer> customerList = CustomerService.getCustomer(0);
+        List<Customer> customers = CustomerService.getCustomer(0);
         System.out.println("Alle Kunden:\n");
-        printList(customerList);
+        printCustomers(customers);
     }
 
     static void showUser(Customer customer) {
-        List<Customer> customerList = new ArrayList<Customer>();
-        customerList.add(customer);
-        printList(customerList);
+        List<Customer> customers = new ArrayList<>();
+        customers.add(customer);
+        printCustomers(customers);
     }
 
     static boolean showSearchUser(int customerNumber) {
-        List<Customer> customerList = CustomerService.getCustomer(customerNumber);
+        List<Customer> customers = CustomerService.getCustomer(customerNumber);
 
-        if (customerList.size() == 0) {
+        if (customers.size() == 0) {
             System.out.printf(
                     "Die Kundennummer %d ist nicht vorhanden.\n",
                     customerNumber);
             return false;
         }
-        printList(customerList);
+        printCustomers(customers);
         return true;
     }
 
-    static void printList(List<Customer> customerList) {
+    static void printCustomers(List<Customer> customers) {
         System.out.printf(
                 "%-3s | %-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10s | %-10s | %-25s | %-17s | %-17s | %-17s | %-32s | %-12s%n",
                 "Nr.", "Anrede", "Titel", "Vorname", "Nachname", "Geburtsdatum", "Straße",
@@ -38,7 +38,7 @@ public class OutputCustomerService {
         System.out.println(
                 "===================================================================================================================================================================================================================================================================================================");
 
-        for (Customer customer : customerList) {
+        for (Customer customer : customers) {
             System.out.printf(
                     "%-3d | %-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10d | %-10s | %-25s | %-17s | %-17s | %-17s | %-32s | %-12s%n",
                     customer.getCustomerNumber(), customer.getSalutation(), customer.getTitle(),
