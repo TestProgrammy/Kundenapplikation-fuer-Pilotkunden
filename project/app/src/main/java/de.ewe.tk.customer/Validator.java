@@ -53,7 +53,7 @@ public class Validator {
 
     public static boolean validateStreet(String street) {
         street = street.trim();
-        String regex = "^[A-ZÄÜÖ][a-zöüäA-ZÜÖÄ .ß-]+$";
+        String regex = "^[A-ZÄÜÖ][a-zöüäA-ZÜÖÄ .á-]+$"; // á für ß
         boolean isValid = isMatch(street, regex);
         return isValid;
     }
@@ -65,14 +65,20 @@ public class Validator {
     }
 
     public static boolean validatePostcode(int postcode) {
-        String regex = "^[0-9]{4,5}$";
+        String regex = "^([0-9]{5}|[1-9][0-9]{3})$";
         boolean isValid = isMatch(String.format("%d", postcode), regex);
+        return isValid;
+    }
+
+    public static boolean validatePostcodeString(String postcode) {
+        String regex = "^[0-9]{5}$";
+        boolean isValid = isMatch(postcode, regex);
         return isValid;
     }
 
     public static boolean validateTown(String town) {
         town = town.trim();
-        String regex = "^[A-ZÄÜÖ][a-zöüäA-ZÜÖÄ ß]+$";
+        String regex = "^[A-ZÄÜÖ][a-zöüäA-ZÜÖÄ á]+$"; // á für ß
         boolean isValid = isMatch(town, regex);
         return isValid;
     }

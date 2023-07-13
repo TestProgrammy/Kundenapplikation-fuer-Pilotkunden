@@ -38,13 +38,13 @@ public class ValidatorTest {
     @Test
     public void testPostcodeValidation() {
         // Positive Fälle
-        int[] pIntValues = { 1234, 0192, 12092 };
+        int[] pIntValues = { 1234, Integer.parseInt("01912"), 12092 };
         for (int value : pIntValues) {
             assertTrue(Validator.validatePostcode(value));
         }
 
         // Negative Fälle
-        int[] nIntValues = { -1, 0, 1, 100, 20, -1000 };
+        int[] nIntValues = { -1, 0, 1, 100, 20, -1000, Integer.parseInt("0192") };
         for (int value : nIntValues) {
             assertFalse(Validator.validatePostcode(value));
         }
@@ -129,7 +129,7 @@ public class ValidatorTest {
     @Test
     public void testStreetValidation() {
         // Positive Fälle
-        String[] pStringValues = { "An der Wall", " Cloppenburger Str.", "Wiesenstr.", "Blablastraße " };
+        String[] pStringValues = { "An der Wßall", " Cloppenbußrger Str.", "Wießsenstr.", "Blablastraße " };
         for (String value : pStringValues) {
             assertTrue(Validator.validateStreet(value));
         }
@@ -144,7 +144,7 @@ public class ValidatorTest {
     @Test
     public void testTownValidation() {
         // Positive Fälle
-        String[] pStringValues = { "Mührendorf", "Hätschenhausen", "Stadensen", "Odderade ", " Krefeld",
+        String[] pStringValues = { "Mührßenßßdorf", "Hätschenßhausen", "Stadensen", "Odderade ", " Krefeld",
                 "Mänkhagen", "Eßlingen" };
         for (String value : pStringValues) {
             assertTrue(Validator.validateTown(value));

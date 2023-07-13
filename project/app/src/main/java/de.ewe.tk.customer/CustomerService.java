@@ -12,6 +12,10 @@ public class CustomerService {
 
     private static Connection getConnection() {
         try {
+            if (user == null || password == null) {
+                System.out.println("Anmeldedaten wurden nicht gefunden!");
+                return null;
+            }
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pilot_customers", user,
                     password);

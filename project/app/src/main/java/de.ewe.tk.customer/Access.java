@@ -6,15 +6,15 @@ public class Access {
     public static String user;
     public static String password;
 
-    public static void readFile() {
+    public static boolean readFile() {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             user = reader.readLine();
             password = reader.readLine();
             reader.close();
+            return true;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+            return false;
         }
     }
 }

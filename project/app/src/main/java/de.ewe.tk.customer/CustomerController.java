@@ -5,7 +5,16 @@ import util.EA;
 
 public class CustomerController {
     public static void main(String[] args) throws Exception {
-        Access.readFile();
+        if (!Access.readFile()) {
+            System.out.println("Es konnten die DB-Anmeldedaten nicht gelesen werden.");
+            System.exit(1);
+        }
+
+        String tets;
+        do {
+            tets = EA.readString("test straße: ");
+            System.out.println("str.: " + tets);
+        } while (!Validator.validateStreet(tets));
 
         String[] choices = { "1. Neukunden einpflegen", "2. Kundendaten verändern", "3. Kunden löschen",
                 "4. Kunden suchen",
