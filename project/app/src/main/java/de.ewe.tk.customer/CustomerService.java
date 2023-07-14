@@ -81,6 +81,8 @@ public class CustomerService {
 
         if (connection == null || rs == null) {
             System.out.println("Es ist ein technischer Fehler aufgetreten: die Datenbank ist nicht erreichbar");
+            closeConnection();
+            System.exit(1);
             return null;
         }
 
@@ -106,6 +108,8 @@ public class CustomerService {
 
         if (connection == null) {
             System.out.println("Es ist ein technischer Fehler aufgetreten: die Datenbank ist nicht erreichbar");
+            closeConnection();
+            System.exit(1);
             return false;
         }
 
@@ -131,6 +135,8 @@ public class CustomerService {
 
         if (connection == null) {
             System.out.println("Es ist ein technischer Fehler aufgetreten: die Datenbank ist nicht erreichbar");
+            closeConnection();
+            System.exit(1);
             return false;
         }
 
@@ -155,6 +161,8 @@ public class CustomerService {
 
         if (connection == null) {
             System.out.println("Es ist ein technischer Fehler aufgetreten: die Datenbank ist nicht erreichbar");
+            closeConnection();
+            System.exit(1);
             return false;
         }
 
