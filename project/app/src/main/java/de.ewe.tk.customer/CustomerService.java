@@ -16,12 +16,15 @@ public class CustomerService {
                 System.out.println("Anmeldedaten wurden nicht gefunden!");
                 return null;
             }
+
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pilot_customers", user,
                     password);
             return connection;
+
         } catch (Exception e) {
             System.out.println("Es konnte keine Verbindung aufgebaut werden. " + e.getMessage());
+            System.exit(1);
             return null;
         }
     }
@@ -31,7 +34,6 @@ public class CustomerService {
             Statement statement = connection.createStatement();
             return statement;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return null;
         }
     }
@@ -41,7 +43,6 @@ public class CustomerService {
             ResultSet resultSet = statement.executeQuery(query);
             return resultSet;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return null;
         }
     }
@@ -51,14 +52,15 @@ public class CustomerService {
             int result = statement.executeUpdate(query);
             return result;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return 0;
         }
     }
 
     public static void closeConnection() {
         try {
-            connection.close();
+            if (connection != null) {
+                connection.close();
+            }
         } catch (Exception e) {
             System.out.println("Die Verbindung konnte nicht geschlossen werden. " + e.getMessage());
         }
@@ -76,6 +78,11 @@ public class CustomerService {
 
         List<Customer> customers = new ArrayList<>();
         ResultSet rs = getResponse(query, createStatement(connection));
+
+        if (connection == null || rs == null) {
+            System.out.println("Es ist ein technischer Fehler aufgetreten: die Datenbank ist nicht erreichbar");
+            return null;
+        }
 
         try {
             while (rs.next()) {
@@ -96,6 +103,12 @@ public class CustomerService {
     public static boolean deleteCustomer(Integer customerNumber) {
         String query = String.format("DELETE FROM customers WHERE customer_number = %d;",
                 customerNumber);
+
+        if (connection == null) {
+            System.out.println("Es ist ein technischer Fehler aufgetreten: die Datenbank ist nicht erreichbar");
+            return false;
+        }
+
         int rs = getResponseInt(query, createStatement(connection));
 
         if (rs == 0) {
@@ -116,10 +129,14 @@ public class CustomerService {
                 customer.getFax(), customer.getEmail(),
                 customer.getNewsletter());
 
+        if (connection == null) {
+            System.out.println("Es ist ein technischer Fehler aufgetreten: die Datenbank ist nicht erreichbar");
+            return false;
+        }
+
         int rs = getResponseInt(query, createStatement(connection));
 
         if (rs == 0) {
-            System.out.println("Das Anlegen des Kunden hat nicht funktioniert.");
             return false;
         }
         return true;
@@ -136,10 +153,14 @@ public class CustomerService {
                 customer.getFax(), customer.getEmail(),
                 customer.getNewsletter(), customer.getCustomerNumber());
 
+        if (connection == null) {
+            System.out.println("Es ist ein technischer Fehler aufgetreten: die Datenbank ist nicht erreichbar");
+            return false;
+        }
+
         int rs = getResponseInt(query, createStatement(connection));
 
         if (rs == 0) {
-            System.out.println("Das Verändern des Kunden hat nicht funktioniert.");
             return false;
         }
         return true;

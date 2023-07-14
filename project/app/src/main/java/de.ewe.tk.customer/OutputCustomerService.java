@@ -4,8 +4,13 @@ import java.util.List;
 public class OutputCustomerService {
 
     static void showAllUsers() {
-        List<Customer> customers = CustomerService.getCustomer(0);
         System.out.println("Alle Kunden:\n");
+        List<Customer> customers = CustomerService.getCustomer(0);
+
+        if (customers == null) {
+            return;
+        }
+
         printCustomers(customers);
     }
 
@@ -17,6 +22,10 @@ public class OutputCustomerService {
 
     static boolean showSearchUser(int customerNumber) {
         List<Customer> customers = CustomerService.getCustomer(customerNumber);
+
+        if (customers == null) {
+            return false;
+        }
 
         if (customers.size() == 0) {
             System.out.printf(

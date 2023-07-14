@@ -33,7 +33,7 @@ public class Validator {
     // Sonderzeichen??
     public static boolean validateName(String name) {
         name = name.trim();
-        String regex = "^[A-ZÀ-ÞŸŽŠŒ][a-zA-ZÀ-ÿŸžŽšŠŒœ .'!-]*$|^[A-ZÀ-ÞŸŽŠŒ]$";
+        String regex = "^[A-ZÀ-ÞŸŽŠŒČ][a-zA-ZÀ-ÿŸžŽšŠŒœČč .'!-]*$|^[A-ZÀ-ÞŸŽŠŒ]$";
         boolean isValid = matches(name, regex);
         return isValid;
     }
@@ -41,7 +41,7 @@ public class Validator {
     // Sonderzeichen ??
     public static boolean validateLastName(String lastName) {
         lastName = lastName.trim();
-        String regex = "^[A-ZÀ-ÞŸŽŠŒ][a-zA-ZÀ-ÿŸžŽšŠŒœ .'!-]*$|^[A-ZÀ-ÞŸŽŠŒ]$";
+        String regex = "^[A-ZÀ-ÞŸŽŠŒČ][a-zA-ZÀ-ÿŸžŽšŠŒœČč .'!-]*$|^[A-ZÀ-ÞŸŽŠŒ]$";
         boolean isValid = matches(lastName, regex);
         return isValid;
     }
@@ -57,7 +57,7 @@ public class Validator {
     // Sonderzeichen ??
     public static boolean validateStreet(String street) {
         street = street.trim();
-        String regex = "^[A-ZÀ-ÞŸŽŠŒ][a-zA-ZÀ-ÿŸžŽšŠŒœ .'!-]*$|^[A-ZÀ-ÞŸŽŠŒ]$";
+        String regex = "^[A-ZÀ-ÞŸŽŠŒČ][a-zA-ZÀ-ÿŸžŽšŠŒœČč .'!-]*$|^[A-ZÀ-ÞŸŽŠŒ]$";
         boolean isValid = matches(street, regex);
         return isValid;
     }
@@ -75,15 +75,9 @@ public class Validator {
         return isValid;
     }
 
-    // ^[a-zA-Z][0-9a-zA-Z][0-9a-zA-Z '-.=#/]*$
-    // [ .'!-]
-    // ^[A-ZÀ-ÞŸŽŠŒ][a-zA-ZÀ-ÿŸžŽšŠŒœ .'!-]*$
-
-    // Č/č
-
     public static boolean validateTown(String town) {
         town = town.trim();
-        String regex = "^[A-ZÀ-ÞŸŽŠŒ][a-zA-ZÀ-ÿŸžŽšŠŒœ .'!-]*$|^[A-ZÀ-ÞŸŽŠŒ]$";
+        String regex = "^[A-ZÀ-ÞŸŽŠŒČ][a-zA-ZÀ-ÿŸžŽšŠŒœČč .'!-]*$|^[A-ZÀ-ÞŸŽŠŒ]$";
         boolean isValid = matches(town, regex);
         return isValid;
     }

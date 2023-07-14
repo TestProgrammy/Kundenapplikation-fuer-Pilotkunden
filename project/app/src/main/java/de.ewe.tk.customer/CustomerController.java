@@ -20,6 +20,8 @@ public class CustomerController {
             int choice = getUserChoice();
 
             CustomerSwitchController.executeChoice(choice);
+
+            waitForEnter();
         }
     }
 
@@ -66,6 +68,10 @@ public class CustomerController {
         } while (!Validator.validateCustomerNumber(customerNumber));
 
         List<Customer> customers = CustomerService.getCustomer(customerNumber);
+
+        if (customers == null) {
+            return;
+        }
 
         if (customers.size() != 1) {
             System.out.println("Fehlgeschlagen! Die Kundennummer ist nicht vorhanden.");
