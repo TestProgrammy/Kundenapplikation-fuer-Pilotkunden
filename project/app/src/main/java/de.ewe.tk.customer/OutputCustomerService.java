@@ -41,7 +41,7 @@ public class OutputCustomerService {
         System.out.printf(
                 "%-3s | %-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10s | %-10s | %-25s | %-17s | %-17s | %-17s | %-32s | %-12s%n",
                 "Nr.", "Anrede", "Titel", "Vorname", "Nachname", "Geburtsdatum", "Straße",
-                "Hausnr.", "PLZ", "Ort",
+                "Hausnr.", "PLZ", "Stadt",
                 "Telefon", "Mobil", "Fax", "E-Mail", "Newsletter");
 
         System.out.println(

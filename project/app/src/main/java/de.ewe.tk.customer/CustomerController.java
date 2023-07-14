@@ -41,7 +41,9 @@ public class CustomerController {
         System.out.println("Neuen Kunden eingeben:\n");
 
         Customer customer = CustomerCreator.createUser();
+        System.out.println();
         OutputCustomerService.showUser(customer);
+        System.out.println();
 
         String isConfirmed = EA.readString("Ist ihre Eingabe so richtig? j/n ");
 
@@ -81,7 +83,9 @@ public class CustomerController {
 
         customer = customers.get(0);
         Customer updatedCustomer = CustomerCreator.changeUser(customer);
+        System.out.println();
         OutputCustomerService.showUser(updatedCustomer);
+        System.out.println();
 
         String isConfirmed = EA.readString("Ist ihre Eingabe so richtig? j/n ");
         System.out.println("");
