@@ -1,4 +1,4 @@
-import java.util.List;
+﻿import java.util.List;
 
 import util.EA;
 
@@ -114,7 +114,7 @@ public class CustomerController {
             return;
         }
 
-        String isConfirmed = EA.readString("Ist ihre Eingabe so richtig? j/n ");
+        String isConfirmed = EA.readString("Wollen Sie den Kunden wirklich löschen? j/n ");
         System.out.println("");
 
         if (isConfirmed.equals("j")) {

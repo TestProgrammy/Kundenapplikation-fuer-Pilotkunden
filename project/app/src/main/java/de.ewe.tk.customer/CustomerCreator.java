@@ -1,4 +1,4 @@
-import util.EA;
+﻿import util.EA;
 
 public class CustomerCreator {
     public static Customer createUser() {
@@ -59,10 +59,13 @@ public class CustomerCreator {
 
         do {
             email = EA.readString("Email: ");
+            if (email.equals("")) {
+                break;
+            }
         } while (!Validator.validateEmail(email));
 
         do {
-            newsletter = EA.readString("Newsletter: Ja/Nein ");
+            newsletter = EA.readString("Newsletter Ja/Nein: ");
         } while (!Validator.validateNewsletter(newsletter));
 
         int newsletterValue = newsletter.equals("Ja") ? 1 : 0;
@@ -80,7 +83,7 @@ public class CustomerCreator {
         System.out.println("\n---Für keine Veränderung Enter drücken---\n");
 
         do {
-            salutation = EA.readString(String.format("Anrede: Stand(%s) ", customer.getSalutation()));
+            salutation = EA.readString(String.format("Anrede\t\taktueller Stand(%s): ", customer.getSalutation()));
             if (salutation.equals("")) {
                 salutation = customer.getSalutation();
                 break;
@@ -88,7 +91,7 @@ public class CustomerCreator {
         } while (!Validator.validateSalutation(salutation));
 
         do {
-            title = EA.readString(String.format("Titel: Stand(%s) ", customer.getTitle()));
+            title = EA.readString(String.format("Titel\t\taktueller Stand(%s): ", customer.getTitle()));
             if (title.equals("")) {
                 if (!title.equals(customer.getTitle())) {
                     boolean isChangeTitle = EA.readString("Soll der Title verändert werden? j/n ").equals("j") ? true
@@ -102,7 +105,7 @@ public class CustomerCreator {
         } while (!Validator.validateTitle(title));
 
         do {
-            name = EA.readString(String.format("Vorname: Stand(%s) ", customer.getName()));
+            name = EA.readString(String.format("Vorname\t\taktueller Stand(%s): ", customer.getName()));
             if (name.equals("")) {
                 name = customer.getName();
                 break;
@@ -110,7 +113,7 @@ public class CustomerCreator {
         } while (!Validator.validateName(name));
 
         do {
-            lastName = EA.readString(String.format("Nachname: Stand(%s) ", customer.getLastName()));
+            lastName = EA.readString(String.format("Nachname\taktueller Stand(%s): ", customer.getLastName()));
             if (lastName.equals("")) {
                 lastName = customer.getLastName();
                 break;
@@ -118,7 +121,7 @@ public class CustomerCreator {
         } while (!Validator.validateLastName(lastName));
 
         do {
-            birthdate = EA.readString(String.format("Geburtsdatum: Stand(%s) ", customer.getBirthdate()));
+            birthdate = EA.readString(String.format("Geburtsdatum\taktueller Stand(%s): ", customer.getBirthdate()));
             if (birthdate.equals("")) {
                 birthdate = customer.getBirthdate();
                 break;
@@ -126,7 +129,7 @@ public class CustomerCreator {
         } while (!Validator.validateBirthdate(birthdate));
 
         do {
-            street = EA.readString(String.format("Straße: Stand(%s) ", customer.getStreet()));
+            street = EA.readString(String.format("Straße\t\taktueller Stand(%s): ", customer.getStreet()));
             if (street.equals("")) {
                 street = customer.getStreet();
                 break;
@@ -134,7 +137,8 @@ public class CustomerCreator {
         } while (!Validator.validateStreet(street));
 
         do {
-            streetNumber = EA.readIntAllowEmpty(String.format("Hausnr.: Stand(%d) ", customer.getStreetNumber()));
+            streetNumber = EA
+                    .readIntAllowEmpty(String.format("Hausnr.\t\taktueller Stand(%d): ", customer.getStreetNumber()));
             if (streetNumber == Integer.MIN_VALUE) {
                 streetNumber = customer.getStreetNumber();
                 break;
@@ -142,7 +146,7 @@ public class CustomerCreator {
         } while (!Validator.validateStreetNumber(streetNumber));
 
         do {
-            postcode = EA.readString(String.format("PLZ: Stand(%s) ", customer.getPostcode()));
+            postcode = EA.readString(String.format("PLZ\t\taktueller Stand(%s): ", customer.getPostcode()));
             if (postcode.equals("")) {
                 postcode = customer.getPostcode();
                 break;
@@ -150,7 +154,7 @@ public class CustomerCreator {
         } while (!Validator.validatePostcode(postcode));
 
         do {
-            town = EA.readString(String.format("Stadt: Stand(%s) ", customer.getTown()));
+            town = EA.readString(String.format("Stadt\t\taktueller Stand(%s): ", customer.getTown()));
             if (town.equals("")) {
                 town = customer.getTown();
                 break;
@@ -158,7 +162,7 @@ public class CustomerCreator {
         } while (!Validator.validateTown(town));
 
         do {
-            phoneNumber = EA.readString(String.format("Telefon: Stand(%s) ", customer.getPhoneNumber()));
+            phoneNumber = EA.readString(String.format("Telefon\t\taktueller Stand(%s): ", customer.getPhoneNumber()));
             if (phoneNumber.equals("")) {
                 phoneNumber = customer.getPhoneNumber();
                 break;
@@ -166,7 +170,8 @@ public class CustomerCreator {
         } while (!Validator.validatePhoneNumber(phoneNumber));
 
         do {
-            mobilephoneNumber = EA.readString(String.format("Mobile: Stand(%s) ", customer.getMobileNumber()));
+            mobilephoneNumber = EA
+                    .readString(String.format("Mobile\t\taktueller Stand(%s): ", customer.getMobileNumber()));
             if (mobilephoneNumber.equals("")) {
                 mobilephoneNumber = customer.getMobileNumber();
                 break;
@@ -174,7 +179,7 @@ public class CustomerCreator {
         } while (!Validator.validateMobileNumber(mobilephoneNumber));
 
         do {
-            fax = EA.readString(String.format("Fax: Stand(%s) ", customer.getFax()));
+            fax = EA.readString(String.format("Fax\t\taktueller Stand(%s): ", customer.getFax()));
             if (fax.equals("")) {
                 fax = customer.getFax();
                 break;
@@ -182,16 +187,23 @@ public class CustomerCreator {
         } while (!Validator.validateFax(fax));
 
         do {
-            email = EA.readString(String.format("Email: Stand(%s) ", customer.getEmail()));
+            email = EA.readString(String.format("Email\t\taktueller Stand(%s): ", customer.getEmail()));
             if (email.equals("")) {
-                email = customer.getEmail();
+                if (!title.equals(customer.getEmail())) {
+                    boolean isChangeEmail = EA.readString("Soll die Email verändert werden? j/n ").equals("j") ? true
+                            : false;
+                    if (!isChangeEmail) {
+                        title = customer.getEmail();
+                    }
+                }
                 break;
             }
         } while (!Validator.validateEmail(email));
 
         do {
             newsletter = EA.readString(
-                    String.format("Newsletter: Ja/Nein Stand(%s) ", customer.getNewsletter() == 1 ? "Ja" : "Nein"));
+                    String.format("Newsletter\taktueller Stand(%s): ",
+                            customer.getNewsletter() == 1 ? "Ja" : "Nein"));
             if (newsletter.equals("")) {
                 newsletter = customer.getNewsletter() == 1 ? "Ja" : "Nein";
                 break;

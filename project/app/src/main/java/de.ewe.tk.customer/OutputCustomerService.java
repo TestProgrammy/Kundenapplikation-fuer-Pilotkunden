@@ -49,8 +49,9 @@ public class OutputCustomerService {
 
         for (Customer customer : customers) {
             System.out.printf(
-                    "%-3d | %-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10d | %-10s | %-25s | %-17s | %-17s | %-17s | %-32s | %-12s%n",
-                    customer.getCustomerNumber(), customer.getSalutation(), customer.getTitle(),
+                    "%-3s | %-12s | %-12s | %-17s | %-17s | %-17s | %-32s | %-10d | %-10s | %-25s | %-17s | %-17s | %-17s | %-32s | %-12s%n",
+                    customer.getCustomerNumber() == null ? "" : String.valueOf(customer.getCustomerNumber()),
+                    customer.getSalutation(), customer.getTitle(),
                     customer.getName(),
                     customer.getLastName(),
                     customer.getBirthdate(), customer.getStreet(), customer.getStreetNumber(),

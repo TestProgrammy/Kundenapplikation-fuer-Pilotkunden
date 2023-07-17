@@ -145,6 +145,15 @@ public class CustomerService {
         if (rs == 0) {
             return false;
         }
+
+        int lastCustomerNumber = getLastCustomerNumber();
+
+        if (lastCustomerNumber == 0) {
+            return false;
+        }
+
+        System.out.printf("\n\t Angelegte Kundennummer: %d\n", lastCustomerNumber);
+
         return true;
     }
 
@@ -172,5 +181,27 @@ public class CustomerService {
             return false;
         }
         return true;
+    }
+
+    private static int getLastCustomerNumber() {
+        String query = "SELECT customer_number FROM pilot_customers.customers WHERE customer_number > 0 ORDER BY customer_number DESC LIMIT 1";
+
+        ResultSet rs = getResponse(query, createStatement(connection));
+
+        if (connection == null || rs == null) {
+            System.out.println("Es ist ein technischer Fehler aufgetreten: die Datenbank ist nicht erreichbar");
+            closeConnection();
+            System.exit(1);
+            return 0;
+        }
+
+        try {
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Es ist ein technischer Fehler aufgetreten: " + e.getMessage());
+        }
+        return 0;
     }
 }
